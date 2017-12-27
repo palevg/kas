@@ -1,0 +1,92 @@
+{
+    "knowledges": [{
+        "legend": "Мови програмування",
+        "items": [{"name": "C", "text": "C"}, {"name": "CPlus", "text": "C++"}, {"name": "CSh", "text": "C#"},
+            {"name": "JS", "text": "JavaScript"}, {"name": "Java", "text": "Java"}, {"name": "Python", "text": "Python"},
+            {"name": "Ruby", "text": "Ruby"}, {"name": "Perl", "text": "Perl"}, {"name": "PHP", "text": "PHP"},
+            {"name": "ObjC", "text": "Objective-C"}, {"name": "Scala", "text": "Scala"},
+            {"name": "Swift", "text": "Swift"}, {"name": "TS", "text": "TypeScript"}]
+    }, {
+        "legend": "Frontend-технології",
+        "items": [{"name": "HTML", "text": "HTML"}, {"name": "HTML5", "text": "HTML5"}, {"name": "CSS", "text": "CSS"},
+            {"name": "CSS3", "text": "CSS3"}, {"name": "Sass", "text": "Sass"}, {"name": "Less", "text": "Less"},
+            {"name": "Stylus", "text": "Stylus"}, {"name": "jQuery", "text": "jQuery"},
+            {"name": "Angular", "text": "Angular.JS"}, {"name": "React", "text": "React.JS"},
+            {"name": "Backbone", "text": "Backbone.JS"}, {"name": "OOCSS", "text": "OOCSS"},
+            {"name": "BEM", "text": "BEM"}, {"name": "SMACSS", "text": "SMACSS"}, {"name": "SVG", "text": "SVG"},
+            {"name": "DOM", "text": "DOM"}, {"name": "HTML5API", "text": "HTML5 API"},
+            {"name": "ES6", "text": "ECMAScript 6"}, {"name": "Git", "text": "Git, GitHub, CVS"}]
+    }, {
+        "legend": "Бази даних",
+        "items": [{"name": "SQL", "text": "SQL"}, {"name": "MySql", "text": "MySql"}, {"name": "NoSQL", "text": "NoSQL"},
+            {"name": "MongoDB", "text": "MongoDB"}, {"name": "PostgreSQL", "text": "PostgreSQL"},
+            {"name": "Oracle", "text": "Oracle"}, {"name": "MSSQL", "text": "MS SQL Server"},
+            {"name": "MariaDB", "text": "MariaDB"}, {"name": "Firebird", "text": "Firebird"},
+            {"name": "Interbase", "text": "Interbase"}, {"name": "Informix", "text": "Informix"}]
+    }, {
+        "legend": "Системи управління сайтом",
+        "items": [{"name": "ShopScript", "text": "Shop-Script"}, {"name": "Bitrix", "text": "1С-Битрикс"},
+            {"name": "WordPress", "text": "WordPress"}, {"name": "Drupal", "text": "Drupal"},
+            {"name": "Joomla", "text": "Joomla!"}, {"name": "MODX", "text": "MODX"}, {"name": "UMI", "text": "UMI.CMS"},
+            {"name": "NetCat", "text": "NetCat"}, {"name": "OpenCart", "text": "OpenCart"},
+            {"name": "HostCMS", "text": "HostCMS"}, {"name": "CSCart", "text": "CS-Cart"}]
+    }, {
+        "legend": "Інші напрямки",
+        "items": [{"name": "ShopScript", "text": "Shop-Script"}, {"name": "Bitrix", "text": "1С-Битрикс"}, 
+            {"name": "WordPress", "text": "WordPress"}, {"name": "Drupal", "text": "Drupal"},
+            {"name": "Joomla", "text": "Joomla!"}, {"name": "MODX", "text": "MODX"}, {"name": "UMI", "text": "UMI.CMS"},
+            {"name": "NetCat", "text": "NetCat"}, {"name": "OpenCart", "text": "OpenCart"},
+            {"name": "HostCMS", "text": "HostCMS"}, {"name": "CSCart", "text": "CS-Cart"}]
+             }],
+    "programmers": [{
+        "name": "Bill Gates",
+        "age": 43,
+        "email": "bg@msn.com",
+        "skill": {
+            "C": 5,
+            "C++": 6,
+            "C#": 4,
+            "JavaScript": 5,
+            "Java": 7,
+            "Python": 3,
+            "Ruby": 2,
+            "Perl": 4,
+            "PHP": 5,
+            "Objective-C": 6,
+            "Scala": 4,
+            "Swift": 3,
+            "TypeScript": 3
+        }
+    }, {
+        "name": "Sergey Brin",
+        "age": 33,
+        "email": "sb@gmail.com",
+        "skill": {
+            "JavaScript": 5,
+            "Java": 7,
+            "Python": 3,
+            "Ruby": 2,
+            "Perl": 4,
+            "PHP": 5,
+            "Scala": 4,
+            "Swift": 3,
+            "TypeScript": 3
+        }
+    }, {
+        "name": "Larry Page",
+        "age": 34,
+        "email": "lp@gmail.com",
+        "skill": {
+            "C": 5,
+            "C++": 6,
+            "C#": 4,
+            "Java": 7,
+            "Python": 3,
+            "Ruby": 2,
+            "Perl": 4,
+            "Objective-C": 6,
+            "Scala": 4,
+            "Swift": 3
+        }
+    }]
+}

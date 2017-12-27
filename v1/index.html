@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+	<meta charset="UTF-8">
+	<title>Система обліку знань</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/menu.js"></script>
+</head>
+<body>
+	<header class="mainWrap">
+		<h1>Система обліку знань</h1>
+
+		<span id="touch-menu" class="mobile-menu"><i class="fa fa-bars fa-fw" aria-hidden="true"></i>Меню</span>
+		<nav>
+			<div>
+				<ul class="menu">
+					<li><span><i class="fa fa-home fa-fw" aria-hidden="true"></i>Головна</span></li>
+					<li>
+						<span><i class="fa fa-tasks fa-fw" aria-hidden="true"></i>Завдання</span>
+						<ul>
+							<li><span>Подменю 4</span></li>
+							<li><span>Подменю 5</span></li>
+							<li><span>Подменю 6</span></li>
+						</ul>
+					</li>
+					<li><span><i class="fa fa-user fa-fw" aria-hidden="true"></i>Про нас</span></li>
+					<li><span><i class="fa fa-envelope fa-fw" aria-hidden="true"></i>Контакти</span></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<hr>
+	<div>
+		<!--article class="">
+			<header>
+				<h2></h2>
+			</header>
+		</article-->
+		<article class="skills">
+			<!--header>
+				<h2></h2>
+			</header-->
+			<fieldset class="skill_group">
+				<legend>Мови програмування</legend>
+				<div class="one_skill">
+					<label for="it_C"><input type="checkbox" id="it_C" class="it_type">C</label>
+					<input type="range" id="it_C_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_CPlus"><input type="checkbox" id="it_CPlus" class="it_type">C++</label>
+					<input type="range" id="it_CPlus_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_CSh"><input type="checkbox" id="it_CSh" class="it_type">C#</label>
+					<input type="range" id="it_CSh_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_JS"><input type="checkbox" id="it_JS" class="it_type">JavaScript</label>
+					<input type="range" id="it_JS_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_Java"><input type="checkbox" id="it_Java" class="it_type">Java</label>
+					<input type="range" id="it_Java_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_Python"><input type="checkbox" id="it_Python" class="it_type">Python</label>
+					<input type="range" id="it_Python_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_Ruby"><input type="checkbox" id="it_Ruby" class="it_type">Ruby</label>
+					<input type="range" id="it_Ruby_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_Perl"><input type="checkbox" id="it_Perl" class="it_type">Perl</label>
+					<input type="range" id="it_Perl_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_PHP"><input type="checkbox" id="it_PHP" class="it_type">PHP</label>
+					<input type="range" id="it_PHP_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_ObjC"><input type="checkbox" id="it_ObjC" class="it_type">Objective-C</label>
+					<input type="range" id="it_ObjC_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_Scala"><input type="checkbox" id="it_Scala" class="it_type">Scala</label>
+					<input type="range" id="it_Scala_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_Swift"><input type="checkbox" id="it_Swift" class="it_type">Swift</label>
+					<input type="range" id="it_Swift_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+				<div class="one_skill">
+					<label for="it_TS"><input type="checkbox" id="it_TS" class="it_type">TypeScript</label>
+					<input type="range" id="it_TS_range" min="1" max="10" value="1" title="вкажіть свій рівень (від 1 до 10)">
+				</div>
+			</fieldset>
+		</article>
+		<div id="button">show</div>
+		<div id="button_erase">erase</div>
+		<table id="users"></table>
+	</div>
+	<hr>
+	<footer>
+		<p>Copyright 2017 Eugeny M. Paliychuk</p>
+	</footer>
+</body>
+</html>
