@@ -40,7 +40,7 @@
              }],
     "programmers": [{
         "name": "Bill Gates",
-        "age": 43,
+        "age": "1955-10-28",
         "email": "bg@msn.com",
         "skill": {
             "C": 5,
@@ -59,7 +59,7 @@
         }
     }, {
         "name": "Sergey Brin",
-        "age": 33,
+        "age": "1973-08-21",
         "email": "sb@gmail.com",
         "skill": {
             "JavaScript": 5,
@@ -74,7 +74,7 @@
         }
     }, {
         "name": "Larry Page",
-        "age": 34,
+        "age": "1973-03-26",
         "email": "lp@gmail.com",
         "skill": {
             "C": 5,

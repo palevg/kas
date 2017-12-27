@@ -252,10 +252,14 @@ nav > div:last-of-type i {
 .dataProgrammer div:nth-child(even) input:invalid ~ i { color: rgba(255, 0, 0, 1); }
 .dataProgrammer input:focus { background: #DCDCDC; }
 
+#skills > div {
+	text-align: center;
+}
+
 .skills {
 	display: flex;
 	flex-wrap: wrap;	
-	justify-content: flex-start;
+	justify-content: center;
 }
 
 .skill_group {
@@ -268,16 +272,12 @@ nav > div:last-of-type i {
 	justify-content: space-between;
 }
 .one_skill input {	height: 14px; }
-.one_skill label {	width: 160px; }
-.skill_range { width: 100px; }
+.one_skill label {	width: 170px; }
+.skill_range { width: 80px; }
 
 #users { margin: auto; }
 #users, #users th, #users td { border: 1px solid #000; }
 #users td, #users th { padding: 10px; }
-
-#searchResult {
-	background: #fff;
-}
 
 #aboutThis {
 	background: #fff;

@@ -102,12 +102,14 @@
 				<h3></h3>
 			</header>
 			<section class="skills"></section>
-			<input type="button" id="button_save" value="Зберегти">
-			<input type="reset" id="button_cancel" value="Відмінити">
-			<input type="button" id="button_search" value="Шукати">
+			<div>
+				<input type="button" id="button_save" value="Зберегти">
+				<input type="reset" id="button_cancel" value="Відмінити">
+				<input type="button" id="button_search" value="Шукати">
+			</div>
 		</article>
 		<article id="searchResult">
-			<h2>searchResult</h2>
+			<h3>Список програмістів, рівень знань яких відповідає критеріям пошуку</h3>
 			<table id="users"></table>
 		</article>
 		<article id="aboutThis">
@@ -129,17 +131,15 @@
 				{id: "progExperience", label: "Досвід роботи (років)", type: "number", min: "0"}];
 		document.getElementsByClassName('dataProgrammer')[0].innerHTML = window.Templates.DataProgrammer(arr);
 		arr = [{legend: "Мови програмування", items: [{name: "C", text: "C"}, {name: "CPlus", text: "C++"},
-				{name: "CSh", text: "C#"}, {name: "JS", text: "JavaScript"}, {name: "Java", text: "Java"},
-				{name: "Python", text: "Python"}, {name: "Ruby", text: "Ruby"}, {name: "Perl", text: "Perl"},
-				{name: "PHP", text: "PHP"}, {name: "ObjC", text: "Objective-C"}, {name: "Scala", text: "Scala"},
-				{name: "Swift", text: "Swift"}, {name: "TS", text: "TypeScript"}]},
+				{name: "CSh", text: "C#"}, {name: "ES6", text: "ECMAScript 6"}, {name: "JS", text: "JavaScript"},
+				{name: "Java", text: "Java"}, {name: "Python", text: "Python"}, {name: "Ruby", text: "Ruby"},
+				{name: "Perl", text: "Perl"}, {name: "PHP", text: "PHP"}, {name: "ObjC", text: "Objective-C"},
+				{name: "Scala", text: "Scala"}, {name: "Swift", text: "Swift"}, {name: "TS", text: "TypeScript"}]},
 			{legend: "Frontend-технології", items: [{name: "HTML", text: "HTML"}, {name: "HTML5", text: "HTML5"},
 				{name: "CSS", text: "CSS"}, {name: "CSS3", text: "CSS3"}, {name: "Sass", text: "Sass"},
 				{name: "Less", text: "Less"}, {name: "Stylus", text: "Stylus"}, {name: "jQuery", text: "jQuery"},
 				{name: "Angular", text: "Angular.JS"}, {name: "React", text: "React.JS"}, {name: "Backbone", text: "Backbone.JS"},
-				{name: "OOCSS", text: "OOCSS"}, {name: "BEM", text: "BEM"}, {name: "SMACSS", text: "SMACSS"},
-				{name: "SVG", text: "SVG"}, {name: "DOM", text: "DOM"}, {name: "HTML5API", text: "HTML5 API"},
-				{name: "ES6", text: "ECMAScript 6"}]},
+				{name: "DOM", text: "DOM"}, {name: "HTML5API", text: "HTML5 API"}]},
 			{legend: "Бази даних", items: [{name: "SQL", text: "SQL"}, {name: "MySql", text: "MySql"},
 				{name: "NoSQL", text: "NoSQL"}, {name: "MongoDB", text: "MongoDB"}, {name: "PostgreSQL", text: "PostgreSQL"},
 				{name: "Oracle", text: "Oracle"}, {name: "MSSQL", text: "MS SQL Server"},
@@ -150,8 +150,11 @@
 				{name: "Joomla", text: "Joomla!"}, {name: "MODX", text: "MODX"}, {name: "UMI", text: "UMI.CMS"},
 				{name: "NetCat", text: "NetCat"}, {name: "OpenCart", text: "OpenCart"}, {name: "HostCMS", text: "HostCMS"},
 				{name: "CSCart", text: "CS-Cart"}]},
-			{legend: "Інші напрямки", items: [{name: "Git", text: "Git"}, {name: "GitHub", text: "GitHub"},
-				{name: "CVS", text: "CVS"}
+			{legend: "Інші напрямки", items: [{name: "OOCSS", text: "OOCSS"}, {name: "BEM", text: "BEM"},
+				{name: "SMACSS", text: "SMACSS"}, {name: "SVG", text: "SVG"}, {name: "Git", text: "Git"},
+				{name: "GitHub", text: "GitHub"}, {name: "CVS", text: "CVS"}, {name: "Node", text: "Node.js"},
+				{name: "NET", text: ".NET"}, {name: "CDT", text: "Chrome Dev Tools"}, {name: "Firebug", text: "Firebug"},
+				{name: "Photoshop", text: "Photoshop"}, {name: "Illustrator", text: "Illustrator"}
 				]}];
 			document.getElementsByClassName('skills')[0].innerHTML = window.Templates.Skills(arr);
 	</script>
