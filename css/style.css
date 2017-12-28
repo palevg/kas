@@ -275,6 +275,13 @@ nav > div:last-of-type i {
 .one_skill label {	width: 170px; }
 .skill_range { width: 80px; }
 
+.button {
+	margin: 15px;
+	font-size: 16px;
+	width: 120px;
+	height: 30px;
+}
+
 #users { margin: auto; }
 #users, #users th, #users td { border: 1px solid #000; }
 #users td, #users th { padding: 10px; }

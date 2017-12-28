@@ -2,7 +2,7 @@ var knowledges = [], // масив напрямків знань
 	programmers = []; // масив користувачів (програмістів)
 
 function getData() {
-	// читання даних з JSON-файлу і їх запис у масив
+	// читання даних з JSON-файлу і їх запис у масиви
 	$.getJSON('http://cevarto.com.ua/data.json', function(data) {
 		knowledges = data.langs;
 		programmers = data.programmers;
@@ -172,7 +172,54 @@ $(document).ready(function() {
 	var buttonSearch = document.getElementById('button_search');
 	if (buttonSearch.addEventListener) {
 		buttonSearch.addEventListener("click", function() {
-			$('#users').find('tr').remove();
+			// вибірка всіх відмічених чекбоксів
+			var nameId = $(".it_type:checked");
+			if (nameId[0]) {
+				var selected = []; // масив результатів пошуку
+				var flag;
+				for (var i = 0; i < programmers.length; i++) {
+					flag = true;
+					$(".it_type:checked").each(function(index, element) {
+						nameId = $(element).attr('id');
+						var skillName = $('label[for="' + nameId + '"]').text();
+						if (!programmers[i].skill[skillName] || programmers[i].skill[skillName] < $("#" + nameId + "_range").val()) {
+							flag = false;
+						}
+					});
+					if (flag) {
+						selected.push(programmers[i]);
+					}
+				}
+				if (selected.length) {
+					// видалення рядків таблиці з попереднього пошуку
+					$('#users').find('tr').remove();
+					$('#users').append("<tr><th>Ім'я</th><th>Дата народження</th><th>e-mail</th><th>Навички</th></tr>");
+					for (var i = 0; i < selected.length; i++) {
+						var tempSkill = "";
+						for (var key in selected[i].skill) {
+							if (tempSkill) {
+								tempSkill += ", ";
+							}
+							tempSkill += key + " (" + selected[i].skill[key] + "/10)";
+						}
+						$('#users').append('<tr><td>' + selected[i].name + '</td><td>' + selected[i].age +
+							'</td><td><a href="mailto:' + programmers[i].email + '">' + programmers[i].email +
+							'</a></td><td>' + tempSkill + '</td></tr>');
+						if ($("#searchResult").is(':hidden')) {
+							$("#searchResult").slideToggle();
+						}
+					}
+				} else {
+					if (!$("#searchResult").is(':hidden')) {
+						$("#searchResult").hide();
+					}
+					alert('Не знайдено жодного програміста, що відповідав би вказаним критеріям!');
+				}
+			} else {
+				alert('Не вибрано жодного критерію для пошуку кандидата!');
+			}
+
+			/*$('#users').find('tr').remove();
 			$('#users').append("<tr><th>Ім'я</th><th>Дата народження</th><th>e-mail</th><th>Навички</th></tr>");
 			for (var i = 0; i < programmers.length; i++) {
 				var tempSkill = "";
@@ -185,6 +232,15 @@ $(document).ready(function() {
 				$('#users').append('<tr><td>' + programmers[i].name + '</td><td>' + programmers[i].age + '</td><td><a href="mailto:' + programmers[i].email + '">' + programmers[i].email + '</a></td><td>' + tempSkill + '</td></tr>');
 				if ($("#searchResult").is(':hidden'))
 					$("#searchResult").slideToggle();
+			}*/
+		}, false);
+	}
+
+	var buttonCancel = document.getElementById('button_cancel');
+	if (buttonCancel.addEventListener) {
+		buttonCancel.addEventListener("click", function() {
+			if (confirm("Ви впевнені? Усі внесені дані не буде збережено.")) {
+				displayBlocks("#startPage");
 			}
 		}, false);
 	}
@@ -192,24 +248,21 @@ $(document).ready(function() {
 	var buttonSave = document.getElementById('button_save');
 	if (buttonSave.addEventListener) {
 		buttonSave.addEventListener("click", function() {
-			var valid = true;
+			var valid = true; // флажок валідності заповнених полів про нового програміста
 			$('.dataProgrammer i').each(function(index) {
   			if ($(this).css('color') != 'rgb(0, 255, 127)') {
-  				valid = false;
+  				valid = false;	// якщо хоча б одна "галочка" не зелена - валідність не пройдена
   				return valid;
   			}
   			return valid;
 			});
 			if (valid) {
-				var nameId = $(".it_type:checked");
+				var nameId = $(".it_type:checked");	// вибірка всіх всіх відмічених чекбоксів
 				if (nameId[0]) {
 					var tempSkill = {};
 					$(".it_type:checked").each(function(index, element) {
 						nameId = $(element).attr('id');
-						var propertyName = $('label[for^="' + nameId + '"]').text();
-						tempSkill[propertyName] = $("#" + nameId + "_range").val();
-						//$(element).removeAttr("checked");
-						$(element).prop("checked", false);
+						tempSkill[$('label[for="' + nameId + '"]').text()] = $("#" + nameId + "_range").val();
 					});
 					var newRecord = {};
 					newRecord.name = $("#progName").val();

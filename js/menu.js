@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var menu = $('.menu');
 
-	$(menu).on('click', function() {
+	menu.on('click', function() {
 		if ($(window).width() <= 760 && !menu.is(':hidden')) {
 			menu.hide();
 		}

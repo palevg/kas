@@ -36,9 +36,7 @@
 				<legend><%= rec.legend %></legend>
 				<% rec.items.forEach(function(item) { %>
 					<div class="one_skill">
-						<label for="it_<%= item.name %>">
-							<input type="checkbox" id="it_<%= item.name %>" class="it_type">
-							<%= item.text %></label>
+						<label for="it_<%= item.name %>"><input type="checkbox" id="it_<%= item.name %>" class="it_type"><%= item.text %></label>
 						<input type="range" class="skill_range" id="it_<%= item.name %>_range">
 					</div>
 				<% }); %>
@@ -103,9 +101,9 @@
 			</header>
 			<section class="skills"></section>
 			<div>
-				<input type="button" id="button_save" value="Зберегти">
-				<input type="reset" id="button_cancel" value="Відмінити">
-				<input type="button" id="button_search" value="Шукати">
+				<input type="button" class="button" id="button_save" value="Зберегти">
+				<input type="reset" class="button" id="button_cancel" value="Відмінити">
+				<input type="button" class="button" id="button_search" value="Шукати">
 			</div>
 		</article>
 		<article id="searchResult">
@@ -151,10 +149,11 @@
 				{name: "NetCat", text: "NetCat"}, {name: "OpenCart", text: "OpenCart"}, {name: "HostCMS", text: "HostCMS"},
 				{name: "CSCart", text: "CS-Cart"}]},
 			{legend: "Інші напрямки", items: [{name: "OOCSS", text: "OOCSS"}, {name: "BEM", text: "BEM"},
-				{name: "SMACSS", text: "SMACSS"}, {name: "SVG", text: "SVG"}, {name: "Git", text: "Git"},
-				{name: "GitHub", text: "GitHub"}, {name: "CVS", text: "CVS"}, {name: "Node", text: "Node.js"},
-				{name: "NET", text: ".NET"}, {name: "CDT", text: "Chrome Dev Tools"}, {name: "Firebug", text: "Firebug"},
-				{name: "Photoshop", text: "Photoshop"}, {name: "Illustrator", text: "Illustrator"}
+				{name: "SMACSS", text: "SMACSS"}, {name: "SVG", text: "SVG"}, {name: "JSON", text: "JSON"},
+				{name: "Git", text: "Git"}, {name: "GitHub", text: "GitHub"}, {name: "CVS", text: "CVS"},
+				{name: "Node", text: "Node.js"}, {name: "NET", text: ".NET"}, {name: "CDT", text: "Chrome Dev Tools"},
+				{name: "Firebug", text: "Firebug"}, {name: "Photoshop", text: "Photoshop"},
+				{name: "Illustrator", text: "Illustrator"}
 				]}];
 			document.getElementsByClassName('skills')[0].innerHTML = window.Templates.Skills(arr);
 	</script>
