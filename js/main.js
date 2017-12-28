@@ -1,10 +1,10 @@
-var knowledges = [], // масив напрямків знань
+var //knowledges = [], // масив напрямків знань
 	programmers = []; // масив користувачів (програмістів)
 
 function getData() {
 	// читання даних з JSON-файлу і їх запис у масиви
 	$.getJSON('http://cevarto.com.ua/data.json', function(data) {
-		knowledges = data.langs;
+		//knowledges = data.knowledges;
 		programmers = data.programmers;
 	});
 }
@@ -193,6 +193,7 @@ $(document).ready(function() {
 				if (selected.length) {
 					// видалення рядків таблиці з попереднього пошуку
 					$('#users').find('tr').remove();
+					// вставка нової таблиці
 					$('#users').append("<tr><th>Ім'я</th><th>Дата народження</th><th>e-mail</th><th>Навички</th></tr>");
 					for (var i = 0; i < selected.length; i++) {
 						var tempSkill = "";
@@ -202,7 +203,7 @@ $(document).ready(function() {
 							}
 							tempSkill += key + " (" + selected[i].skill[key] + "/10)";
 						}
-						$('#users').append('<tr><td>' + selected[i].name + '</td><td>' + selected[i].age +
+						$('#users').append('<tr><td>' + selected[i].name + '</td><td>' + selected[i].birth +
 							'</td><td><a href="mailto:' + programmers[i].email + '">' + programmers[i].email +
 							'</a></td><td>' + tempSkill + '</td></tr>');
 						if ($("#searchResult").is(':hidden')) {
@@ -218,21 +219,6 @@ $(document).ready(function() {
 			} else {
 				alert('Не вибрано жодного критерію для пошуку кандидата!');
 			}
-
-			/*$('#users').find('tr').remove();
-			$('#users').append("<tr><th>Ім'я</th><th>Дата народження</th><th>e-mail</th><th>Навички</th></tr>");
-			for (var i = 0; i < programmers.length; i++) {
-				var tempSkill = "";
-				for (var key in programmers[i].skill) {
-					if (tempSkill) {
-						tempSkill += ", ";
-					}
-					tempSkill += key + " (" + programmers[i].skill[key] + "/10)";
-				}
-				$('#users').append('<tr><td>' + programmers[i].name + '</td><td>' + programmers[i].age + '</td><td><a href="mailto:' + programmers[i].email + '">' + programmers[i].email + '</a></td><td>' + tempSkill + '</td></tr>');
-				if ($("#searchResult").is(':hidden'))
-					$("#searchResult").slideToggle();
-			}*/
 		}, false);
 	}
 
@@ -266,7 +252,7 @@ $(document).ready(function() {
 					});
 					var newRecord = {};
 					newRecord.name = $("#progName").val();
-					newRecord.age = $("#progBirth").val();
+					newRecord.birth = $("#progBirth").val();
 					newRecord.email = $("#progEmail").val();
 					newRecord.experience = $("#progExperience").val();
 					newRecord.skill = tempSkill;
