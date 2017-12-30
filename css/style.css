@@ -4,10 +4,9 @@
 }
 
 /* RESET STYLES */
-body, div, dl, dt, dd, ul, ol, li, /*h1, h2, h3, h4, h5, h6,*/ pre, form, label, /*fieldset, input, */p, blockquote, th, td { margin: 0; padding: 0; }
+body, div, dl, dt, dd, /*ul, ol, li, h1, h2, h3, h4, h5, h6,*/ pre, form, label, /*fieldset, input, */p, blockquote, th, td { margin: 0; padding: 0; }
 table { border-collapse: collapse; border-spacing: 0; }
 address, caption, cite, code, dfn, em, strong, var { font-style: normal; font-weight: normal; }
-ol, ul, li { list-style: none; }
 caption { text-align: left; }
 h1, h2, h3, h4, h5, h6 { font-weight: normal; }
 q:before, q:after { content: ''; }
@@ -50,7 +49,7 @@ h2 {
 	line-height:1.3em;
 }
 h3 { font-size:24px; line-height:1.3em; text-align: center; }
-h4 { font-size:18px; line-height:1.3em; }
+h4 { font-size:18px; line-height:1.3em; text-align: center; }
 h5 { font-size:16px; }
 h6 { font-size:14px; }
 p { padding-bottom: 11px; }
@@ -60,6 +59,8 @@ p, div, span { line-height: 1.5em; }
 .mainHeader {
 	width: 920px;
 	margin: 0 auto;
+	position: sticky;
+	top: 0;
 }
 
 nav {
@@ -83,7 +84,10 @@ nav > div:last-of-type i {
 	color: yellow;
 }
 
-.menu{
+.menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 	display: block;
 }
 .menu li{
@@ -287,11 +291,30 @@ nav > div:last-of-type i {
 #users td, #users th { padding: 10px; }
 
 #aboutThis {
-	background: #fff;
+	background: rgba(224, 255, 255, 0.3);
 }
 
 #contacts {
-	background: yellow;
+	background: rgba(224, 255, 255, 0.3);
+}
+
+#contacts iframe {
+	width: 800px;
+	height: 600px;
+}
+
+@media (min-width: 761px) and (max-width: 979px) {
+	#contacts iframe {
+		width: 600px;
+		height: 450px;
+	}
+}
+
+@media (min-width: 481px) and (max-width: 760px) {
+	#contacts iframe {
+		width: 400px;
+		height: 300px;
+	}
 }
 
 hr {
