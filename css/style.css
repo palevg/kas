@@ -298,22 +298,27 @@ nav > div:last-of-type i {
 	background: rgba(224, 255, 255, 0.3);
 }
 
-#contacts iframe {
-	width: 800px;
-	height: 600px;
+#map_canvas {
+	width: 1160px;
+	height: 550px;
 }
 
-@media (min-width: 761px) and (max-width: 979px) {
-	#contacts iframe {
-		width: 600px;
-		height: 450px;
+@media (min-width: 992px) and (max-width: 1199px) {
+	#map_canvas {
+		width: 951px;
 	}
 }
 
-@media (min-width: 481px) and (max-width: 760px) {
-	#contacts iframe {
-		width: 400px;
-		height: 300px;
+@media (min-width: 768px) and (max-width: 991px) {
+	#map_canvas {
+		width: 727px;
+	}
+}
+
+@media (max-width: 767px) {
+	#map_canvas {
+		width: 500px;
+		height: 450px;
 	}
 }
 
