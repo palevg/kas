@@ -26,7 +26,8 @@ article, aside, figure, footer, header, hgroup, nav, section { display: block; }
 a:hover { color: #BA0707; }*/
 
 body{
-	background: #ffffff url("../img/backgrnd.jpg") repeat-y 0 0;
+	/*background: #ffffff url("../img/backgrnd.jpg") repeat-y 0 0;*/
+	background: #ffffff url("../img/grey.png") repeat;
 	color: #3E4156;
 	font: 16px "OpenSans", Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -47,6 +48,8 @@ h2 {
 	text-align: center;
 	font-size:32px;
 	line-height:1.3em;
+	font-weight: bold;
+	text-shadow: 1px 1px #fff;
 }
 h3 { font-size:24px; line-height:1.3em; text-align: center; }
 h4 { font-size:18px; line-height:1.3em; text-align: center; }
@@ -133,7 +136,6 @@ nav > div:last-of-type i {
 
 .menu ul li {
 	display:block;
-	float: none;
 	background:none;
 	font-size: 14px;
 	margin:0;
@@ -169,7 +171,7 @@ nav > div:last-of-type i {
 	color: #fff;
 	text-decoration: none;
 }
-@media (min-width: 761px) and (max-width: 979px) {
+@media (min-width: 768px) and (max-width: 991px) {
 	.mainHeader { width: 720px;	}
 	.menu ul {
 		width: 150px;
@@ -180,7 +182,7 @@ nav > div:last-of-type i {
 	.menu li span{ padding: 8px; }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 767px) {
 	.mainHeader {
 		width: auto;
 		padding: 0 20px;
@@ -225,9 +227,6 @@ nav > div:last-of-type i {
 		padding-left: 25px;
 }	
 }
-
-@media (max-width: 480px) {}
-@media (max-width: 320px) {}
 /* end Header & MainMenu*/
 
 .mainWrap {
@@ -295,12 +294,49 @@ nav > div:last-of-type i {
 }
 
 #contacts {
-	background: rgba(224, 255, 255, 0.3);
+	/*background: rgba(224, 255, 255, 0.3);*/
+}
+
+.contacts {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.contact_block {
+	width: 300px;
+	height: 50px;
+	display: flex;
+	margin: 0 20px 40px 15px;
+}
+
+/*.fa_border {
+	border: 2px solid #fff;
+	border-radius: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 30px 10px;
+}*/
+
+.contact_block i {
+	color: #797979;
+	border: 2px solid #797979;
+	border-radius: 40px;
+	padding: 13px 44px 45px 17px;
+}
+.contact_text {
+	margin-left: 10px;
+}
+
+.contact_text > div:first-child {
+	font-weight: bold;
 }
 
 #map_canvas {
 	width: 1160px;
 	height: 550px;
+	margin: auto;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -317,7 +353,13 @@ nav > div:last-of-type i {
 
 @media (max-width: 767px) {
 	#map_canvas {
-		width: 500px;
+		width: 440px;
+		height: 450px;
+	}
+}
+@media (max-width: 480px) {
+	#map_canvas {
+		width: 380px;
 		height: 450px;
 	}
 }

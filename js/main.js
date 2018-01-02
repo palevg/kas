@@ -1,4 +1,5 @@
-var //knowledges = [], // масив напрямків знань
+var map,						// карта Google
+	//knowledges = [], // масив напрямків знань
 	programmers = []; // масив користувачів (програмістів)
 
 function getData() {
@@ -40,6 +41,25 @@ function validField(fieldName, fieldRe) {
 		$(fieldName).next().css('color', 'rgba(255, 0, 0, 1)'); // "галочка" червоного кольору
 	}
 }
+
+function initialize() {
+	var myLatLng = new google.maps.LatLng(50.428663, 30.476223);
+	var myOptions = {
+		zoom: 17,
+		center: new google.maps.LatLng(50.430538, 30.469974),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	}
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	var marker = new google.maps.Marker({
+		position: myLatLng,
+		title: "Державний університет телекомунікацій",
+		map: map
+	});
+	$(window).resize(function() {
+		map.panTo(new google.maps.LatLng(50.428663, 30.476223));
+	});
+}
+google.maps.event.addDomListener(window, 'load', initialize);
 
 $(document).ready(function() {
 	/* завантаження сторінки */
@@ -142,6 +162,9 @@ $(document).ready(function() {
 	if (miContacts.addEventListener) {
 		miContacts.addEventListener("click", function() {
 			displayBlocks("#contacts");
+			/* Оскільки при завантаженні сторінки блок із картою схований, Google Maps API не мав розмірів блока з картою,
+			а тому і не відобразив карту правильно. Зараз "заставляємо" API перемалювати карту. */
+			google.maps.event.trigger(map, 'resize');
 		}, false);
 	}
 

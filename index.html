@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="css/font-awesome.css" type="text/css">
 	
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 	<script type="text/javascript" src="js/lodash.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/menu.js"></script>
@@ -161,12 +161,63 @@
 		</article>
 		<article id="contacts">
 			<header>
-				<h2>КОНТАКТИ</h2>
+				<h2>ЗВОРОТНІЙ ЗВ'ЯЗОК</h2>
 			</header>
-			<section>
-				<div id="map_canvas"></div>
-				<div></div>
+			<hr>
+			<section class="contacts">
+				<div>
+					<div class="contact_block">
+						<i class="fa fa-phone fa-fw fa-2x" aria-hidden="true"></i>
+						<div class="contact_text">
+							<div>Телефони</div>
+							<div>+380-50-123-4567</div>
+							<div>+380-67-123-4567</div>
+						</div>
+					</div>
+					<div class="contact_block">
+						<i class="fa fa-fax fa-fw fa-2x" aria-hidden="true"></i>
+						<div class="contact_text">
+							<div>Факс</div>
+							<div>+380-44-220-3450</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div class="contact_block">
+						<i class="fa fa-envelope fa-fw fa-2x" aria-hidden="true"></i>
+						<div class="contact_text">
+							<div>Електронна пошта</div>
+							<div>office@kas.com</div>
+						</div>
+					</div>
+					<div class="contact_block">
+						<i class="fa fa-globe fa-fw fa-2x" aria-hidden="true"></i>
+						<div class="contact_text">
+							<div>Адреса</div>
+							<div>вулиця Солом'янська, 7</div>
+							<div>Київ, 02000, Україна</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div class="contact_block">
+						<i class="fa fa-key fa-fw fa-2x" aria-hidden="true"></i>
+						<div class="contact_text">
+							<div>Режим роботи</div>
+							<div>Пн-Пт: 9:00-18:00</div>
+							<div>Сб: 10:00-17:00</div>
+						</div>
+					</div>
+					<div class="contact_block">
+						<i class="fa fa-info-circle fa-fw fa-2x" aria-hidden="true"></i>
+						<div class="contact_text">
+							<div>Додаткова інформація</div>
+							<div>Ми завжди рані новим контактам і знайомствам!</div>
+						</div>
+					</div>
+				</div>
 			</section>
+			<div id="map_canvas"></div>
 		</article>
 	</main>
 	<hr>
@@ -208,27 +259,6 @@
 				{name: "Illustrator", text: "Illustrator"}
 				]}];
 			document.getElementsByClassName('skills')[0].innerHTML = window.Templates.Skills(arr);
-	</script>
-
-	<script type="text/javascript">
-		function mapInitialize() {
-			var myLatLng = new google.maps.LatLng(50.428663, 30.476223);
-			var myOptions = {
-				zoom: 17,
-				center: myLatLng,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			}
-			var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-			var marker = new google.maps.Marker({
-				position: myLatLng,
-				title: "Державний університет телекомунікацій",
-				map: map
-			});
-			$(window).resize(function() {
-				map.panTo(new google.maps.LatLng(50.428663, 30.476223));
-			});
-		}
-		google.maps.event.addDomListener(window, 'load', mapInitialize);
 	</script>
 </body>
 </html>
