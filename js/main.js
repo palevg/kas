@@ -42,6 +42,22 @@ function validField(fieldName, fieldRe) {
 	}
 }
 
+function confirmCancel(nextBlock) {
+	// перевірка, чи користувач знаходиться на сторінці вводу даних про нового програміста
+	if ($("#newProgrammer").is(':hidden')) {
+		displayBlocks(nextBlock);
+		return true;
+	} else {
+		// і якщо так, то запит на підтвердження переходу із незбереженням даних
+		if (confirm("Ви впевнені? Усі внесені дані не буде збережено.")) {
+			displayBlocks(nextBlock);
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
 function initialize() {
 	var myLatLng = new google.maps.LatLng(50.428663, 30.476223);
 	var myOptions = {
@@ -64,6 +80,32 @@ google.maps.event.addDomListener(window, 'load', initialize);
 $(document).ready(function() {
 	/* завантаження сторінки */
 	displayBlocks("#startPage");
+
+	/* анімація для слайдера */
+	var sliderPaused = false;
+	var sliderInputs = $('.slider input');
+
+	setInterval(function(){
+		if (!sliderPaused) {
+			sliderNext = sliderInputs.filter(":checked").next('input');
+			if (sliderNext.length) {
+				sliderNext.prop('checked', true)
+			} else {
+				sliderInputs.first().prop('checked', true);
+			}
+		}
+	}, 5000);
+
+	var slider = document.getElementsByClassName('slider');
+	if (slider[0].addEventListener) {
+		slider[0].addEventListener("mouseenter", function() {
+			sliderPaused = true;
+		}, false);
+		slider[0].addEventListener("mouseleave", function() {
+			sliderPaused = false;
+		}, false);
+	}
+
 	/* зчитуємо дані з JSON */
 	getData();
 
@@ -89,7 +131,7 @@ $(document).ready(function() {
 	if (miMain.addEventListener) {
 		miMain.addEventListener("click", function() {
 			/* показуємо головну сторінку сайту */
-			displayBlocks("#startPage");
+			confirmCancel("#startPage");
 		}, false);
 	}
 
@@ -129,24 +171,25 @@ $(document).ready(function() {
 	var miSearchProgr = document.getElementById('mi-task3');
 	if (miSearchProgr.addEventListener) {
 		miSearchProgr.addEventListener("click", function() {
-			/* обнуляємо поля після попереднього вводу */
-			$(".it_type").each(function(index, element) {
-				$(element).prop("checked", false);
-				checkIT($(element).attr('id'));
-			});
-			/* показуємо сторінку введення даних про нового програміста */
-			$("#skills h3")['0'].innerText = "Виберіть області знань та вкажіть потрібний їх рівень";
-			displayBlocks("#skills");
-			$("#button_search").hide();
-			/* показуємо/ховаємо потрібні кнопки */
-			if ($("#button_search").is(':hidden')) {
-				$("#button_search").show();
-			}
-			if (!$("#button_save").is(':hidden')) {
-				$("#button_save").hide();
-			}
-			if (!$("#button_cancel").is(':hidden')) {
-				$("#button_cancel").hide();
+			if (confirmCancel("#skills")) {
+				/* обнуляємо поля після попереднього вводу */
+				$(".it_type").each(function(index, element) {
+					$(element).prop("checked", false);
+					checkIT($(element).attr('id'));
+				});
+				/* показуємо сторінку введення даних про нового програміста */
+				$("#skills h3")['0'].innerText = "Виберіть області знань та вкажіть потрібний їх рівень";
+				$("#button_search").hide();
+				/* показуємо/ховаємо потрібні кнопки */
+				if ($("#button_search").is(':hidden')) {
+					$("#button_search").show();
+				}
+				if (!$("#button_save").is(':hidden')) {
+					$("#button_save").hide();
+				}
+				if (!$("#button_cancel").is(':hidden')) {
+					$("#button_cancel").hide();
+				}
 			}
 		}, false);
 	}
@@ -154,14 +197,14 @@ $(document).ready(function() {
 	var miAbout = document.getElementById('mi-about');
 	if (miAbout.addEventListener) {
 		miAbout.addEventListener("click", function() {
-			displayBlocks("#aboutThis");
+			confirmCancel("#aboutThis");
 		}, false);
 	}
 
 	var miContacts = document.getElementById('mi-contacts');
 	if (miContacts.addEventListener) {
 		miContacts.addEventListener("click", function() {
-			displayBlocks("#contacts");
+			confirmCancel("#contacts");
 			/* Оскільки при завантаженні сторінки блок із картою схований, Google Maps API не мав розмірів блока з картою,
 			а тому і не відобразив карту правильно. Зараз "заставляємо" API перемалювати карту. */
 			google.maps.event.trigger(map, 'resize');
@@ -227,7 +270,7 @@ $(document).ready(function() {
 							tempSkill += key + " (" + selected[i].skill[key] + "/10)";
 						}
 						$('#users').append('<tr><td>' + selected[i].name + '</td><td>' + selected[i].birth +
-							'</td><td><a href="mailto:' + programmers[i].email + '">' + programmers[i].email +
+							'</td><td><a href="mailto:' + selected[i].email + '">' + selected[i].email +
 							'</a></td><td>' + tempSkill + '</td></tr>');
 						if ($("#searchResult").is(':hidden')) {
 							$("#searchResult").slideToggle();
@@ -248,9 +291,7 @@ $(document).ready(function() {
 	var buttonCancel = document.getElementById('button_cancel');
 	if (buttonCancel.addEventListener) {
 		buttonCancel.addEventListener("click", function() {
-			if (confirm("Ви впевнені? Усі внесені дані не буде збережено.")) {
-				displayBlocks("#startPage");
-			}
+			confirmCancel("#startPage");
 		}, false);
 	}
 
@@ -283,11 +324,12 @@ $(document).ready(function() {
 					$(".it_type").each(function(index, element) {
 						checkIT($(element).attr('id'));
 					});
-					$("#newProgrammer").hide();
-					$("#skills").hide();
+					displayBlocks("#startPage");
+					/*$("#newProgrammer").hide();
+					$("#skills").hide();*/
 					alert('Дані про нового програміста успішно внесено до системи!\nНа даний час у базі даних є інформація щодо ' + programmers.length + ' програмістів.');
 				} else {
-					alert('Навичок не вибрано!');
+					alert('Не вибрано жодної навички для нового програміста!');
 				}
 			} else {
 				alert('Перевірте правильність введення особистих даних!');

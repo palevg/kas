@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="css/font-awesome.css" type="text/css">
 	
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEza8bTh7pp5mOnw3lLfhZL3s4CbELWq4"></script>
 	<script type="text/javascript" src="js/lodash.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/menu.js"></script>
@@ -87,7 +87,35 @@
 			<header>
 				<h1>СИСТЕМА ОБЛІКУ ЗНАНЬ</h1>
 			</header>
-			<section>Slider</section>
+			<section class="slider">
+				<input type="radio" id="selector1" name="imageInput" checked>
+				<input type="radio" id="selector2" name="imageInput">
+				<input type="radio" id="selector3" name="imageInput">
+				<input type="radio" id="selector4" name="imageInput">
+				<input type="radio" id="selector5" name="imageInput">
+				<div class="item">
+					<img src="img/slide1.jpg" alt="слайд 1">
+				</div>
+				<div class="item">
+					<img src="img/slide2.jpg" alt="слайд 2">
+				</div>
+				<div class="item">
+					<img src="img/slide3.jpg" alt="слайд 3">
+				</div>
+				<div class="item">
+					<img src="img/slide4.jpg" alt="слайд 4">
+				</div>
+				<div class="item">
+					<img src="img/slide5.jpg" alt="слайд 5">
+				</div>
+				<div class="selector_list">
+					<label for="selector1"></label>
+					<label for="selector2"></label>
+					<label for="selector3"></label>
+					<label for="selector4"></label>
+					<label for="selector5"></label>
+				</div>
+			</section>
 		</article>
 		<article id="newProgrammer">
 			<header>
@@ -112,7 +140,7 @@
 			<table id="users"></table>
 		</article>
 		<article id="aboutThis">
-			<h2>Система учёта знаний</h2>
+			<h2>Технічне завдання на тему "Система учёта знаний"</h2>
 			<h4>Пользователи («программисты») указывают и оценивают свои знания в различных (сгруппированных) областях.</h4>
 			<p><h3>Дополнительно:</h3>
 				<ol>
@@ -141,7 +169,7 @@
 				</ul>
 			</p>
 			<p>
-				<h3>Обязательно</h3>
+				<h3>Обязательно:</h3>
 				<ul>
 					<li>Особое внимание следует уделить скорости работы, зависание интерфейса при выполнении операций загрузки данных, фильтрации, сортировки недопустимо.</li>
 					<li>Пишите код так, как бы вы его писали в работе - внутренности задания будут оцениваться даже тщательней, чем внешнее соответствие заданию.</li>
@@ -163,7 +191,7 @@
 			<header>
 				<h2>ЗВОРОТНІЙ ЗВ'ЯЗОК</h2>
 			</header>
-			<hr>
+			<div id="map_canvas"></div>
 			<section class="contacts">
 				<div>
 					<div class="contact_block">
@@ -217,7 +245,6 @@
 					</div>
 				</div>
 			</section>
-			<div id="map_canvas"></div>
 		</article>
 	</main>
 	<hr>
