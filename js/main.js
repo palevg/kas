@@ -145,7 +145,7 @@ $(document).ready(function() {
 				// показуємо головну сторінку сайту
 				confirmCancel("#startPage");
 			}
-			if (place == 'mi-task1') {
+			if (place == 'mi-addProgr') {
 				// завдання "додавання нового програміста"
 				// обнуляємо поля після попереднього вводу
 				$("#progName").next().css('color', 'rgba(255, 0, 0, 0)');
@@ -179,7 +179,7 @@ $(document).ready(function() {
 				// завдання "видалення записів"
 				alert('Видалення буде згодом )))');
 			}
-			if (place == 'mi-task3') {
+			if (place == 'mi-search') {
 				// завдання "пошук програмістів"
 				if (confirmCancel("#skills")) {
 					// обнуляємо поля після попереднього вводу
