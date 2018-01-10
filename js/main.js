@@ -44,7 +44,7 @@ function validField(fieldName, fieldRe) {
 
 function confirmCancel(nextBlock) {
 	// перевірка, чи користувач знаходиться на сторінці вводу даних про нового програміста
-	if ($("#newProgrammer").is(':hidden')) {
+	if ($("#newProgrammer").is(':hidden') && $("#newSkill").is(':hidden')) {
 		displayBlocks(nextBlock);
 		return true;
 	} else {
@@ -80,6 +80,28 @@ function initialize() {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 $(document).ready(function() {
+	// головне меню
+	var menu = $('.menu');
+
+	menu.on('click', function() {
+		if ($(window).width() <= 760 && !menu.is(':hidden')) {
+			menu.hide();
+		}
+	});
+
+	$('#touch-menu').on('click', function(e) {
+		//e.preventDefault();
+		menu.slideToggle();
+	});
+	
+	$(window).resize(function() {
+		var w = $(window).width();
+		if (w > 760 && menu.is(':hidden')) {
+			menu.removeAttr('style');
+		}
+	});
+	// END головне меню
+
 	/* завантаження сторінки */
 	displayBlocks("#startPage");
 
@@ -147,37 +169,37 @@ $(document).ready(function() {
 			}
 			if (place == 'mi-addProgr') {
 				// завдання "додавання нового програміста"
-				// обнуляємо поля після попереднього вводу
-				$("#progName").next().css('color', 'rgba(255, 0, 0, 0)');
-				$("#progName").val('');
-				$("#progBirth").val('1991-09-01');
-				$("#progEmail").next().css('color', 'rgba(255, 0, 0, 0)');
-				$("#progEmail").val('');
-				$("#progExperience").val('0');
-				$(".it_type").each(function(index, element) {
-					$(element).prop("checked", false);
-					checkIT($(element).attr('id'));
-				});
-				// показуємо сторінку введення даних про нового програміста
-				displayBlocks("#newProgrammer");
-				$("#skills h3")['0'].innerText = "Виберіть області знань та вкажіть Ваш рівень у них";
-				if ($("#skills").is(':hidden')) {
-					$("#skills").show();
+				if (confirmCancel("#newProgrammer")) {
+					// обнуляємо поля після попереднього вводу
+					$("#progName").next().css('color', 'rgba(255, 0, 0, 0)');
+					$("#progName").val('');
+					$("#progBirth").val('1991-09-01');
+					$("#progEmail").next().css('color', 'rgba(255, 0, 0, 0)');
+					$("#progEmail").val('');
+					$("#progExperience").val('0');
+					$(".it_type").each(function(index, element) {
+						$(element).prop("checked", false);
+						checkIT($(element).attr('id'));
+					});
+					// показуємо сторінку введення даних про нового програміста
+					$("#skills h3")['0'].innerText = "Виберіть області знань та вкажіть Ваш рівень у них";
+					if ($("#skills").is(':hidden')) {
+						$("#skills").show();
+					}
+					// показуємо/ховаємо потрібні кнопки
+					if ($("#button_save").is(':hidden')) {
+						$("#button_save").show();
+					}
+					if ($("#button_cancel").is(':hidden')) {
+						$("#button_cancel").show();
+					}
+					if (!$("#button_search").is(':hidden')) {
+						$("#button_search").hide();
+					}
+					if (!$("#button_del").is(':hidden')) {
+						$("#button_del").hide();
+					}
 				}
-				// показуємо/ховаємо потрібні кнопки
-				if ($("#button_save").is(':hidden')) {
-					$("#button_save").show();
-				}
-				if ($("#button_cancel").is(':hidden')) {
-					$("#button_cancel").show();
-				}
-				if (!$("#button_search").is(':hidden')) {
-					$("#button_search").hide();
-				}
-			}
-			if (place == 'mi-task2') {
-				// завдання "видалення записів"
-				alert('Видалення буде згодом )))');
 			}
 			if (place == 'mi-search') {
 				// завдання "пошук програмістів"
@@ -189,7 +211,6 @@ $(document).ready(function() {
 					});
 					// показуємо сторінку введення даних про нового програміста
 					$("#skills h3")['0'].innerText = "Виберіть області знань та вкажіть потрібний їх рівень";
-					$("#button_search").hide();
 					// показуємо/ховаємо потрібні кнопки
 					if ($("#button_search").is(':hidden')) {
 						$("#button_search").show();
@@ -200,16 +221,73 @@ $(document).ready(function() {
 					if (!$("#button_cancel").is(':hidden')) {
 						$("#button_cancel").hide();
 					}
+					if (!$("#button_del").is(':hidden')) {
+						$("#button_del").hide();
+					}
+				}
+			}
+			if (place == 'mi-addSkill') {
+				// завдання "додавання нової області знань"
+				if (confirmCancel("#newSkill")) {
+					// обнуляємо поля після попереднього вводу
+					$(".it_type").each(function(index, element) {
+						$(element).prop("checked", false);
+						checkIT($(element).attr('id'));
+					});
+					// показуємо сторінку введення даних про нову область знань
+					$("#skills h3")['0'].innerText = "Наявні області знань:";
+					if ($("#skills").is(':hidden')) {
+						$("#skills").show();
+					}
+					// показуємо/ховаємо потрібні кнопки
+					if ($("#button_save").is(':hidden')) {
+						$("#button_save").show();
+					}
+					if ($("#button_cancel").is(':hidden')) {
+						$("#button_cancel").show();
+					}
+					if (!$("#button_search").is(':hidden')) {
+						$("#button_search").hide();
+					}
+					if (!$("#button_del").is(':hidden')) {
+						$("#button_del").hide();
+					}
+				}
+			}
+			if (place == 'mi-delSkill') {
+				// завдання "видалення вибраних областей знань"
+				if (confirmCancel("#skills")) {
+					// обнуляємо поля після попереднього вводу
+					$(".it_type").each(function(index, element) {
+						$(element).prop("checked", false);
+						checkIT($(element).attr('id'));
+					});
+					// показуємо сторінку введення даних про нового програміста
+					$("#skills h3")['0'].innerText = "Виберіть ті області знань, які необхідно видалити";
+					// показуємо/ховаємо потрібні кнопки
+					if ($("#button_del").is(':hidden')) {
+						$("#button_del").show();
+					}
+					if ($("#button_cancel").is(':hidden')) {
+						$("#button_cancel").show();
+					}
+					if (!$("#button_search").is(':hidden')) {
+						$("#button_search").hide();
+					}
+					if (!$("#button_save").is(':hidden')) {
+						$("#button_save").hide();
+					}
 				}
 			}
 			if (place == 'mi-about') {
 				confirmCancel("#aboutThis");
 			}
 			if (place == 'mi-contacts') {
-				confirmCancel("#contacts");
-				/* Оскільки при завантаженні сторінки блок із картою схований, Google Maps API не мав розмірів блока з картою,
-				а тому і не відобразив карту правильно. Зараз "заставляємо" API перемалювати карту. */
-				google.maps.event.trigger(map, 'resize');
+				if (confirmCancel("#contacts")) {
+					/* Оскільки при завантаженні сторінки блок із картою схований, Google Maps API не мав розмірів блока з картою,
+					а тому і не відобразив карту правильно. Зараз "заставляємо" API перемалювати карту. */
+					google.maps.event.trigger(map, 'resize');
+				}
 			}
 		}, false);
 	}
@@ -238,7 +316,7 @@ $(document).ready(function() {
 		}, false);
 	}
 
-	// EventListener натискання кнопок
+	// EventListener натискання кнопок "Зберегти", "Відмінити", "Шукати", "Видалити"
 	var buttonClick = document.getElementById('skills');
 	if (buttonClick.addEventListener) {
 		buttonClick.addEventListener("click", function(e) {
@@ -296,41 +374,58 @@ $(document).ready(function() {
 				confirmCancel("#startPage");
 			}
 			if (place == 'button_save') {
-				var valid = true; // флажок валідності заповнених полів про нового програміста
-				$('.dataProgrammer i').each(function(index) {
-	  			if ($(this).css('color') != 'rgb(0, 255, 127)') {
-	  				valid = false;	// якщо хоча б одна "галочка" не зелена - валідність не пройдена
-	  				return valid;
-	  			}
-	  			return valid;
-				});
-				if (valid) {
-					var nameId = $(".it_type:checked");	// вибірка всіх всіх відмічених чекбоксів
-					if (nameId[0]) {
-						var tempSkill = {};
-						$(".it_type:checked").each(function(index, element) {
-							nameId = $(element).attr('id');
-							tempSkill[$('label[for="' + nameId + '"]').text()] = $("#" + nameId + "_range").val();
-						});
-						var newRecord = {};
-						newRecord.name = $("#progName").val();
-						newRecord.birth = $("#progBirth").val();
-						newRecord.email = $("#progEmail").val();
-						newRecord.experience = $("#progExperience").val();
-						newRecord.skill = tempSkill;
-						programmers.push(newRecord);
-						$(".it_type").each(function(index, element) {
-							checkIT($(element).attr('id'));
-						});
-						displayBlocks("#startPage");
-						/*$("#newProgrammer").hide();
-						$("#skills").hide();*/
-						alert('Дані про нового програміста успішно внесено до системи!\nНа даний час у базі даних є інформація щодо ' + programmers.length + ' програмістів.');
+				if (!$("#newProgrammer").is(':hidden')) {
+					// зберігання інформації про нового програміста
+					var valid = true; // флажок валідності заповнених полів про нового програміста
+					$('.dataProgrammer i').each(function(index) {
+		  			if ($(this).css('color') != 'rgb(0, 255, 127)') {
+		  				valid = false;	// якщо хоча б одна "галочка" не зелена - валідність не пройдена
+		  				return valid;
+		  			}
+		  			return valid;
+					});
+					if (valid) {
+						var nameId = $(".it_type:checked");	// вибірка всіх всіх відмічених чекбоксів
+						if (nameId[0]) {
+							var tempSkill = {};
+							$(".it_type:checked").each(function(index, element) {
+								nameId = $(element).attr('id');
+								tempSkill[$('label[for="' + nameId + '"]').text()] = $("#" + nameId + "_range").val();
+							});
+							var newRecord = {};
+							newRecord.name = $("#progName").val();
+							newRecord.birth = $("#progBirth").val();
+							newRecord.email = $("#progEmail").val();
+							newRecord.experience = $("#progExperience").val();
+							newRecord.skill = tempSkill;
+							programmers.push(newRecord);
+							$(".it_type").each(function(index, element) {
+								checkIT($(element).attr('id'));
+							});
+							displayBlocks("#startPage");
+							alert('Дані про нового програміста успішно внесено до системи!\nНа даний час у базі даних є інформація щодо ' + programmers.length + ' програмістів.');
+						} else {
+							alert('Не вибрано жодної навички для нового програміста!');
+						}
 					} else {
-						alert('Не вибрано жодної навички для нового програміста!');
+						alert('Перевірте правильність введення особистих даних!');
 					}
 				} else {
-					alert('Перевірте правильність введення особистих даних!');
+					// зберігання інформації про нову область знань
+					alert('save new skill');
+				}
+			}
+			if (place == 'button_del') {
+				// видалення областей знань
+				var nameId = $(".it_type:checked");
+				if (nameId[0]) {
+					if (confirm("Усі відмічені області знань буде видалено із системи.\nВи впевнені?")) {
+						$(".it_type:checked").each(function(index, element) {
+							$(element).parent().parent().remove();
+						});
+					}
+				} else {
+					alert('Не вибрано жодної області знань для видалення!');
 				}
 			}
 		}, false);

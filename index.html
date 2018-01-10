@@ -12,9 +12,9 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEza8bTh7pp5mOnw3lLfhZL3s4CbELWq4"></script>
 	<script type="text/javascript" src="js/lodash.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="js/menu.js"></script>
 
 	<script type="text/template" data-name="DataProgrammer">
+		<!-- TEMPLATE для додавання полів блоку введення даних про нового програміста -->
 		<% arr.forEach(function(rec) { %>
 			<div>
 				<label for="<%= rec.id %>"><%= rec.label %></label><br>
@@ -31,7 +31,15 @@
 		<% }); %>
 	</script>
 
+	<script type="text/template" data-name="SkillGroups">
+		<!-- TEMPLATE для додавання пунктів у SELECT "Розділи областей знань" -->
+		<% arr.forEach(function(rec) { %>
+				<option><%= rec.legend %></option>
+		<% }); %>
+	</script>
+
 	<script type="text/template" data-name="Skills">
+		<!-- TEMPLATE для додавання полів блоку "Області знань" -->
 		<% arr.forEach(function(rec) { %>
 			<fieldset class="skill_group">
 				<legend><%= rec.legend %></legend>
@@ -68,15 +76,26 @@
 				<ul class="menu">
 					<li id="mi-main"><span><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Головна</span></li>
 					<li>
-						<span><i class="fa fa-tasks fa-fw" aria-hidden="true"></i>&nbsp;Завдання</span>
+						<span><i class="fa fa-tasks fa-fw" aria-hidden="true"></i>&nbsp;Програмісти</span>
 						<ul>
 							<li id="mi-addProgr"><span><i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>&nbsp;Додавання запису</span></li>
-							<li id="mi-task2"><span><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>&nbsp;Видалення запису</span></li>
 							<li id="mi-search"><span><i class="fa fa-search fa-fw" aria-hidden="true"></i>&nbsp;Пошук</span></li>
 						</ul>
 					</li>
-					<li id="mi-about"><span><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;Про нас</span></li>
-					<li id="mi-contacts"><span><i class="fa fa-envelope fa-fw" aria-hidden="true"></i>&nbsp;Контакти</span></li>
+					<li>
+						<span><i class="fa fa-check-square-o fa-fw" aria-hidden="true"></i>&nbsp;Області знань</span>
+						<ul>
+							<li id="mi-addSkill"><span><i class="fa fa-plus fa-fw" aria-hidden="true"></i>&nbsp;Додавання запису</span></li>
+							<li id="mi-delSkill"><span><i class="fa fa-trash-o fa-fw" aria-hidden="true"></i>&nbsp;Видалення запису</span></li>
+						</ul>
+					</li>
+					<li>
+						<span><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;Про нас</span>
+						<ul>
+							<li id="mi-about"><span><i class="fa fa-thumb-tack fa-fw" aria-hidden="true"></i>&nbsp;Тех.завдання</span></li>
+							<li id="mi-contacts"><span><i class="fa fa-envelope fa-fw" aria-hidden="true"></i>&nbsp;Контакти</span></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 			<div>Привіт, Гість! &nbsp;<i class="fa fa-user-circle-o fa-fw fa-2x" aria-hidden="true"></i></div>
@@ -121,31 +140,51 @@
 					<label for="selector5"></label>
 				</div>
 			</section>
-		</article>
+		</article><!--end startPage-->
 		<article id="newProgrammer">
 			<header>
 				<h2>Внесення даних про нового програміста</h2>
 				<h3>Вкажіть свої особисті дані</h3>
 			</header>
 			<section class="dataProgrammer"></section>
-		</article>
+		</article><!--end newProgrammer-->
+		<article id="newSkill">
+			<header>
+				<h2>Внесення даних про нову область знань</h2>
+			</header>
+			<section class="newSkill">
+				<div>
+					<label>Виберіть розділ</label><br>
+					<select class="skillGroups"></select>
+				</div>
+				<div>
+					<label>Вкажіть назву нової області знань</label><br>
+					<input type="text" maxlength="16">
+				</div>
+				<div>
+					<label>Вкажіть ідентифікатор (латиницею)</label><br>
+					<input type="text" maxlength="16">
+				</div>
+			</section>
+		</article><!--end newSkill-->
 		<article id="skills">
 			<header>
 				<h3></h3>
-			</header>
+			</header>			
 			<section class="skills"></section>
 			<div>
 				<input type="button" class="button" id="button_save" value="Зберегти">
+				<input type="button" class="button" id="button_del" value="Видалити">
 				<input type="reset" class="button" id="button_cancel" value="Відмінити">
 				<a href="#searchResult">
 					<input type="button" class="button" id="button_search" value="Шукати">
 				</a>
 			</div>
-		</article>
+		</article><!--end skills-->
 		<article id="searchResult">
 			<h3>Список програмістів, рівень знань яких відповідає критеріям пошуку</h3>
 			<table id="selected"></table>
-		</article>
+		</article><!--end searchResult-->
 		<article id="aboutThis">
 			<h2>Технічне завдання на тему "Система учёта знаний"</h2>
 			<h4>Пользователи («программисты») указывают и оценивают свои знания в различных (сгруппированных) областях.</h4>
@@ -193,7 +232,7 @@
 					<li>Регистрация.</li>
 				</ul>
 			</p>
-		</article>
+		</article><!--end aboutThis-->
 		<article id="contacts">
 			<header>
 				<h2>ЗВОРОТНІЙ ЗВ'ЯЗОК</h2>
@@ -247,26 +286,27 @@
 						<i class="fa fa-info-circle fa-fw fa-2x" aria-hidden="true"></i>
 						<div class="contact_text">
 							<div>Додаткова інформація</div>
-							<div>Ми завжди рані новим контактам і знайомствам!</div>
+							<div>Ми завжди раді новим контактам і знайомствам!</div>
 						</div>
 					</div>
 				</div>
 			</section>
-		</article>
-	</main>
+		</article><!--end contacts-->
+	</main><!--end mainWrap-->
 	<hr>
 	<footer>
-		<div class="social">
-			<a class="push facebook" target="_blank"><i class="fa fa-facebook"></i></a>
-			<a class="push twitter" target="_blank"><i class="fa fa-twitter"></i></a>
-			<a class="push vkontakte" target="_blank"><i class="fa fa-vk"></i></a>
-			<a class="push google" target="_blank"><i class="fa fa-google-plus"></i></a>
-			<a class="push ok" target="_blank"><i class="fa fa-odnoklassniki"></i></a>
+		<div>
+			<a class="social facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+			<a class="social twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+			<a class="social vkontakte" target="_blank"><i class="fa fa-vk"></i></a>
+			<a class="social google" target="_blank"><i class="fa fa-google-plus"></i></a>
+			<a class="social ok" target="_blank"><i class="fa fa-odnoklassniki"></i></a>
 		</div>
 		<p>Copyright 2017 "Система обліку знань"</p>
 	</footer>
 
 	<script type="text/javascript">
+		// дані для TEMPLATE-вставки
 		var arr = [{id: "progName", label: "Прізвище та ім'я", type: "text", placeholder: "Шевченко Тарас"},
 				{id: "progBirth", label: "Дата народження", type: "date"},
 				{id: "progEmail", label: "E-mail", type: "email", placeholder: "Ваш e-mail"},
@@ -299,6 +339,7 @@
 				{name: "Firebug", text: "Firebug"}, {name: "Photoshop", text: "Photoshop"},
 				{name: "Illustrator", text: "Illustrator"}
 				]}];
+			document.getElementsByClassName('skillGroups')[0].innerHTML = window.Templates.SkillGroups(arr);
 			document.getElementsByClassName('skills')[0].innerHTML = window.Templates.Skills(arr);
 	</script>
 </body>

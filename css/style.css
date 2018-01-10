@@ -197,6 +197,7 @@ nav > div:last-of-type i {
 	nav {
 		margin: 0;
 		background: none;
+		position: absolute;
 	}
 	nav > div:last-of-type {
 		display: none;
@@ -397,21 +398,28 @@ nav > div:last-of-type i {
 	background: #A9A9A9;
 }
 
-.dataProgrammer {
+.dataProgrammer,
+.skills,
+.newSkill {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 }
-.dataProgrammer input {
+.dataProgrammer input,
+.newSkill input,
+.newSkill select {
 	height: 28px;
 	font-size: 16px;
 }
-.dataProgrammer div {padding: 0 15px;}
+.dataProgrammer div,
+.newSkill div {padding: 0 15px;}
 .dataProgrammer div:nth-child(odd) input { width: 200px; }
 .dataProgrammer div:nth-child(even) input { width: 170px; }
 .dataProgrammer div:nth-child(even) input:valid ~ i { color: rgba(0, 255, 127, 1); }
 .dataProgrammer div:nth-child(even) input:invalid ~ i { color: rgba(255, 0, 0, 1); }
-.dataProgrammer input:focus {
+.dataProgrammer input:focus,
+.newSkill input:focus,
+.newSkill select:focus {
 	outline: none;
 	box-shadow: 0 0 8px rgba(0,0,0,0.7);
 	-webkit-transition: box-shadow ease-out 0.4s;
@@ -419,15 +427,13 @@ nav > div:last-of-type i {
 	-o-transition: box-shadow ease-out 0.4s;
 	transition: box-shadow ease-out 0.4s;
 }
+.newSkill input,
+.newSkill select {
+	width: 280px;
+}
 
 #skills > div {
 	text-align: center;
-}
-
-.skills {
-	display: flex;
-	flex-wrap: wrap;	
-	justify-content: center;
 }
 
 .skill_group {
@@ -541,7 +547,7 @@ footer {
 	justify-content: space-around;
 }
 
-.push {
+.social {
 	display: inline-block;
 	width: 40px;
 	line-height: 40px;
