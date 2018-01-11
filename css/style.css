@@ -412,11 +412,13 @@ nav > div:last-of-type i {
 	font-size: 16px;
 }
 .dataProgrammer div,
-.newSkill div {padding: 0 15px;}
+.newSkill div {padding: 0 15px 15px;}
 .dataProgrammer div:nth-child(odd) input { width: 200px; }
 .dataProgrammer div:nth-child(even) input { width: 170px; }
-.dataProgrammer div:nth-child(even) input:valid ~ i { color: rgba(0, 255, 127, 1); }
-.dataProgrammer div:nth-child(even) input:invalid ~ i { color: rgba(255, 0, 0, 1); }
+.dataProgrammer div:nth-child(even) input:valid ~ i,
+.newSkill select:valid ~ i { color: rgba(0, 255, 127, 1); }
+.dataProgrammer div:nth-child(even) input:invalid ~ i,
+.newSkill select:invalid ~ i { color: rgba(255, 0, 0, 1); }
 .dataProgrammer input:focus,
 .newSkill input:focus,
 .newSkill select:focus {

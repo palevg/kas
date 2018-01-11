@@ -316,6 +316,18 @@ $(document).ready(function() {
 		}, false);
 	}
 
+	var knowledgeID = document.getElementById('knowledgeID');
+	if (knowledgeID.addEventListener) {	/* перевірка поля ID на валідність */
+		// при вводі даних, для наглядності
+		knowledgeID.addEventListener("keypress", function() {
+			validField('#knowledgeID', /^[\w]{1}[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i);
+		}, false);
+		// при покиданні поля, результуюче
+		knowledgeID.addEventListener("blur", function() {
+			validField('#knowledgeID', /^[\w]{1}[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i);
+		}, false);
+	}
+
 	// EventListener натискання кнопок "Зберегти", "Відмінити", "Шукати", "Видалити"
 	var buttonClick = document.getElementById('skills');
 	if (buttonClick.addEventListener) {
@@ -412,7 +424,30 @@ $(document).ready(function() {
 					}
 				} else {
 					// зберігання інформації про нову область знань
-					alert('save new skill');
+					var knowledgeName = $("#knowledgeName").val();
+					var knowledgeID = $("#knowledgeID").val();
+					if (knowledgeName && knowledgeID) {
+						var nameId = $("#it_" + knowledgeID);
+						if (nameId[0]) {
+							alert('Область знань з таким ідентифікатором вже існує.\nДля збереження необхідно змінити ідентифікатор.');
+						} else {
+							nameId = $('.one_skill label');
+							var flag = true;
+							for (var key in nameId) {
+								if (nameId[key].textContent == knowledgeName) {
+									flag = false;
+									alert('Область знань з такою назвою вже існує.\nДля збереження необхідно змінити назву.');
+									break;
+								}
+							}
+							if (flag) {
+								alert('ЗАПИСУЄМО НОВУ ОБЛАСТЬ ЗНАНЬ');
+							}
+						}
+
+					} else {
+						alert('Поля з назвою та ідентифікаторою нової області знань не можуть бути пустими!');
+					}
 				}
 			}
 			if (place == 'button_del') {
