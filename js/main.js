@@ -15,6 +15,26 @@ function checkIT(name) {
 	$("#" + name + ":checked").val() ? $("#" + name + "_range").show() : $("#" + name + "_range").hide();
 }
 
+function updateSkills() {
+	/* встановлюємо атрибути для полів типу RANGE */
+	$(".skills input[type=range]").each(function(index) {
+		$(this).attr('min', '1');
+		$(this).attr('max', '10');
+		$(this).attr('value', '1');
+		$(this).attr('title', 'вкажіть свій рівень (від 1 до 10)');
+	});
+	/* встановлюємо інтерактивну спливаючу підказку для полів типу RANGE */
+	$(".skills input[type=range]").change(function() {
+		$(".skills input[type=range]").each(function(index) {
+			$(this).attr('title', $(this).val() + ' з 10-ти');
+		});
+	});
+	/* встановлюємо видимість полів типу RANGE при зміні чекбоксів */
+	$(".it_type").change(function(e) {
+		checkIT(e.target.id);
+	});
+}
+
 function displayBlocks(block) {
 	// формування масиву, елементами якого будуть ID всіх article у блоці mainWrap
 	var blocks = [];
@@ -133,23 +153,7 @@ $(document).ready(function() {
 	/* зчитуємо дані з JSON */
 	getData();
 
-	/* встановлюємо атрибути для полів типу RANGE */
-	$(".skills input[type=range]").each(function(index) {
-		$(this).attr('min', '1');
-		$(this).attr('max', '10');
-		$(this).attr('value', '1');
-		$(this).attr('title', 'вкажіть свій рівень (від 1 до 10)');
-	});
-	/* встановлюємо інтерактивну спливаючу підказку для полів типу RANGE */
-	$(".skills input[type=range]").change(function() {
-		$(".skills input[type=range]").each(function(index) {
-			$(this).attr('title', $(this).val() + ' з 10-ти');
-		});
-	});
-	/* встановлюємо видимість полів типу RANGE при зміні чекбоксів */
-	$(".it_type").change(function(e) {
-		checkIT(e.target.id);
-	});
+	updateSkills();
 
 	var joinReg = document.getElementsByClassName('joinReg');
 	if (joinReg[0].addEventListener) {
@@ -230,6 +234,10 @@ $(document).ready(function() {
 				// завдання "додавання нової області знань"
 				if (confirmCancel("#newSkill")) {
 					// обнуляємо поля після попереднього вводу
+					$("#knowledgeName").next().css('color', 'rgba(255, 0, 0, 0)');
+					$("#knowledgeName").val('');
+					$("#knowledgeID").next().css('color', 'rgba(255, 0, 0, 0)');
+					$("#knowledgeID").val('');
 					$(".it_type").each(function(index, element) {
 						$(element).prop("checked", false);
 						checkIT($(element).attr('id'));
@@ -320,11 +328,23 @@ $(document).ready(function() {
 	if (knowledgeID.addEventListener) {	/* перевірка поля ID на валідність */
 		// при вводі даних, для наглядності
 		knowledgeID.addEventListener("keypress", function() {
-			validField('#knowledgeID', /^[\w]{1}[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i);
+			validField('#knowledgeID', /^[\w-\.]+$/i);
 		}, false);
 		// при покиданні поля, результуюче
 		knowledgeID.addEventListener("blur", function() {
-			validField('#knowledgeID', /^[\w]{1}[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i);
+			validField('#knowledgeID', /^[\w-\.]+$/i);
+		}, false);
+	}
+
+	var knowledgeName = document.getElementById('knowledgeName');
+	if (knowledgeName.addEventListener) {	/* перевірка поля NAME на валідність */
+		// при вводі даних, для наглядності
+		knowledgeName.addEventListener("keypress", function() {
+			validField('#knowledgeName', /^[А-ЯЁІЇа-яёії\w-\.]+$/i);
+		}, false);
+		// при покиданні поля, результуюче
+		knowledgeName.addEventListener("blur", function() {
+			validField('#knowledgeName', /^[А-ЯЁІЇа-яёії\w-\.]+$/i);
 		}, false);
 	}
 
@@ -386,9 +406,9 @@ $(document).ready(function() {
 				confirmCancel("#startPage");
 			}
 			if (place == 'button_save') {
+				var valid = true; // флажок валідності заповнених полів
 				if (!$("#newProgrammer").is(':hidden')) {
 					// зберігання інформації про нового програміста
-					var valid = true; // флажок валідності заповнених полів про нового програміста
 					$('.dataProgrammer i').each(function(index) {
 		  			if ($(this).css('color') != 'rgb(0, 255, 127)') {
 		  				valid = false;	// якщо хоча б одна "галочка" не зелена - валідність не пройдена
@@ -424,15 +444,22 @@ $(document).ready(function() {
 					}
 				} else {
 					// зберігання інформації про нову область знань
-					var knowledgeName = $("#knowledgeName").val();
-					var knowledgeID = $("#knowledgeID").val();
-					if (knowledgeName && knowledgeID) {
+					$('.newSkill i').each(function(index) {
+		  			if ($(this).css('color') != 'rgb(0, 255, 127)') {
+		  				valid = false;	// якщо хоча б одна "галочка" не зелена - валідність не пройдена
+		  				return valid;
+		  			}
+		  			return valid;
+					});
+					if (valid) {
+						var knowledgeID = $("#knowledgeID").val();
 						var nameId = $("#it_" + knowledgeID);
 						if (nameId[0]) {
 							alert('Область знань з таким ідентифікатором вже існує.\nДля збереження необхідно змінити ідентифікатор.');
 						} else {
 							nameId = $('.one_skill label');
 							var flag = true;
+							var knowledgeName = $("#knowledgeName").val();
 							for (var key in nameId) {
 								if (nameId[key].textContent == knowledgeName) {
 									flag = false;
@@ -441,12 +468,21 @@ $(document).ready(function() {
 								}
 							}
 							if (flag) {
-								alert('ЗАПИСУЄМО НОВУ ОБЛАСТЬ ЗНАНЬ');
+								nameId = $('.skill_group');
+								for (var i = 0; i < nameId.length; i++) {
+									var tagLegend = nameId[i].getElementsByTagName('legend');
+									if (tagLegend[0].innerText == $('.skillGroups :selected').text()) {
+										$(nameId[i]).append('<div class="one_skill"><label for="it_' + knowledgeID + '"><input type="checkbox" id="it_' + knowledgeID + '" class="it_type">' + knowledgeName + '</label><input type="range" class="skill_range" id="it_' + knowledgeID + '_range"></div>');
+										updateSkills();
+										displayBlocks("#startPage");
+										alert('Дані про нову область знань успішно внесено до системи!');
+										break;
+									}
+								}
 							}
 						}
-
 					} else {
-						alert('Поля з назвою та ідентифікаторою нової області знань не можуть бути пустими!');
+						alert('Перевірте правильність введення даних про нову область знань!');
 					}
 				}
 			}

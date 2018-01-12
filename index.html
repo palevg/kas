@@ -31,6 +31,21 @@
 		<% }); %>
 	</script>
 
+	<script type="text/template" data-name="DataSkill">
+		<!-- TEMPLATE для додавання полів блоку введення нової області знань -->
+		<% arr.forEach(function(rec) { %>
+			<div>
+				<label><%= rec.label %></label><br>
+				<% if (rec.label == "Виберіть розділ") { %>
+					<select class="skillGroups"></select>
+				<% } else { %>
+					<input type="text" id="<%= rec.id %>" maxlength="16" required>
+				<% } %>
+				<i class="fa fa-check fa-fw" aria-hidden="true"></i>
+			</div>
+		<% }); %>
+	</script>
+
 	<script type="text/template" data-name="SkillGroups">
 		<!-- TEMPLATE для додавання пунктів у SELECT "Розділи областей знань" -->
 		<% arr.forEach(function(rec) { %>
@@ -152,23 +167,7 @@
 			<header>
 				<h2>Внесення даних про нову область знань</h2>
 			</header>
-			<section class="newSkill">
-				<div>
-					<label>Виберіть розділ</label><br>
-					<select class="skillGroups"></select>
-					<i class="fa fa-check fa-fw" aria-hidden="true"></i>
-				</div>
-				<div>
-					<label>Вкажіть назву нової області знань</label><br>
-					<input type="text" id="knowledgeName" maxlength="16" required>
-					<i class="fa fa-check fa-fw" aria-hidden="true"></i>
-				</div>
-				<div>
-					<label>Вкажіть ідентифікатор (латиницею)</label><br>
-					<input type="text" id="knowledgeID" maxlength="16" required>
-					<i class="fa fa-check fa-fw" aria-hidden="true"></i>
-				</div>
-			</section>
+			<section class="newSkill"></section>
 		</article><!--end newSkill-->
 		<article id="skills">
 			<header>
@@ -315,6 +314,9 @@
 				{id: "progEmail", label: "E-mail", type: "email", placeholder: "Ваш e-mail"},
 				{id: "progExperience", label: "Досвід роботи (років)", type: "number", min: "0"}];
 		document.getElementsByClassName('dataProgrammer')[0].innerHTML = window.Templates.DataProgrammer(arr);
+		arr = [{label: "Виберіть розділ"}, {id: "knowledgeName", label: "Вкажіть назву нової області знань"},
+				{id: "knowledgeID", label: "Вкажіть ідентифікатор (латиницею)"}];
+		document.getElementsByClassName('newSkill')[0].innerHTML = window.Templates.DataSkill(arr);
 		arr = [{legend: "Мови програмування", items: [{name: "C", text: "C"}, {name: "CPlus", text: "C++"},
 				{name: "CSh", text: "C#"}, {name: "ES6", text: "ECMAScript 6"}, {name: "JS", text: "JavaScript"},
 				{name: "Java", text: "Java"}, {name: "Python", text: "Python"}, {name: "Ruby", text: "Ruby"},
