@@ -4,7 +4,7 @@
 }
 
 /* RESET STYLES */
-body, div, dl, dt, dd, /*ul, ol, li, h1, h2, h3, h4, h5, h6,*/ pre, form, label, /*fieldset, input, */p, blockquote, th, td { margin: 0; padding: 0; }
+body, div, dl, dt, dd, pre, form, label, p, blockquote, th, td { margin: 0; padding: 0; }
 table { border-collapse: collapse; border-spacing: 0; }
 address, caption, cite, code, dfn, em, strong, var { font-style: normal; font-weight: normal; }
 caption { text-align: left; }
@@ -13,7 +13,6 @@ q:before, q:after { content: ''; }
 strong { font-weight: bold; }
 em { font-style: italic; }
 a { text-decoration: none; }
-a:hover { text-decoration: underline; }
 a:active, a:focus { outline: none; }
 article, aside, figure, footer, header, hgroup, nav, section { display: block; }
 * {
@@ -24,10 +23,8 @@ article, aside, figure, footer, header, hgroup, nav, section { display: block; }
 
 body {
 	background: #fff url("../img/grey.png") repeat;
-	color: #3E4156;
 	font: 16px "OpenSans", Helvetica, Arial, sans-serif;
-	line-height: 1;
-	width: 100%;
+	color: #3E4156;
 }
 
 h1 {
@@ -51,6 +48,16 @@ h5 { font-size: 16px; }
 h6 { font-size: 14px; }
 p { padding-bottom: 11px; }
 p, div, span { line-height: 1.5em; }
+
+hr {
+	margin: 15px auto;
+	height: 2px;
+	border: 0;
+	background: -webkit-linear-gradient(left, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
+	background: -moz-linear-gradient(left, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
+	background: -o-linear-gradient(left, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
+	background: linear-gradient(to right, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
+}
 
 /* Header & MainMenu*/
 .mainHeader {
@@ -229,14 +236,99 @@ nav > div:last-of-type i {
 		padding-left: 25px;
 	}
 }
-/* end Header & MainMenu*/
+/* END Header & MainMenu*/
 
+/* модальне вікно */
+.modalDialog {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 9;
+	display: none;
+}
+
+.modalDialog div {
+	position: relative;
+	background: #fff url("../img/grey.png") repeat;
+	width: 800px;
+	margin: 250px auto;
+	padding: 5px 0;
+	font-size: 18px;
+	border: 3px solid #9CA3DA;
+	border-radius: 7px;
+	-webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+	-o-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modalDialog img {
+	height: 170px;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+.modalDialog table {
+	margin: 20px 5px;
+}
+.modalDialog table td {padding: 7px;}
+.modalDialog table td:first-child {
+	text-align: right;
+	min-width: 220px;
+}
+.modalDialog table td:last-child {
+	text-align: left;
+	font-weight: bold;
+}
+.close {
+	position: absolute;
+	right: 50px;
+	top: 40px;
+	width: 24px;
+	font-size: 24px;
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+	z-index: 10;
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	.modalDialog div {
+		width: 700px;
+		margin: 200px auto;
+	}
+}
+
+@media (max-width: 767px) {
+	.modalDialog div {
+		width: 400px;
+		text-align: center;
+		margin: 150px auto;
+	}
+	.modalDialog img { position: static; }
+	.modalDialog table td:first-child {	min-width: 170px; }
+}
+
+@media (max-width: 480px) {
+	.modalDialog div {
+		width: 320px;
+		margin: 100px auto;
+	}
+	.modalDialog table td:first-child {	min-width: 140px; }
+}
+/* END модальне вікно */
+
+/* ----- основний блок ----- */
 .mainWrap {
 	width: 100%;
 	padding: 0 20px;
 	margin: 0 auto;
 }
 
+/* слайдер */
 .slider {
 	width: 1180px;
 	position: relative;
@@ -397,7 +489,9 @@ nav > div:last-of-type i {
 #selector5:checked ~ .selector_list label:nth-of-type(5) {
 	background: #A9A9A9;
 }
+/* END слайдер */
 
+/* блоки "Програмісти" і "Області знань" */
 .dataProgrammer,
 .skills,
 .newSkill {
@@ -458,13 +552,38 @@ nav > div:last-of-type i {
 	height: 30px;
 }
 
-#selected { margin: auto; }
-#selected, #selected thead { border: 2px solid #000; }
+#selected {
+	margin: auto;
+	cursor: pointer;
+}
+#selected, #selected thead {
+	background: #3E4156;
+	border: 2px solid #000;
+}
+#selected thead { color: #fff; }
 #selected th, #selected td {
 	border: 1px solid #000;
 	padding: 10px;
 }
+#selected tbody tr:nth-child(2n) { background: #D3D3D3; }
+#selected tbody tr:nth-child(2n+1) { background: #FFFAFA; }
+#selected tbody tr:hover {
+	background: #9CA3DA;
+	color: #fff;
+	-webkit-transition: all 0.2s ease-in-out 0s;
+	-moz-transition: all 0.2s ease-in-out 0s;
+	-o-transition: all 0.2s ease-in-out 0s;
+	transition: all 0.2s ease-in-out 0s;
+}
+#selected tbody td:nth-child(1) {
+	display: none;
+}
+#selected td:last-child {
+	max-width: 1000px;
+}
+/* END блоки "Програмісти" і "Області знань" */
 
+/* блоки "Про нас" і "Контакти" */
 #aboutThis {
 	background: rgba(255, 250, 250, 0.3);
 }
@@ -532,16 +651,7 @@ nav > div:last-of-type i {
 .contact_text > div:first-child {
 	font-weight: bold;
 }
-
-hr {
-	margin: 15px auto;
-	height: 2px;
-	border: 0;
-	background: -webkit-linear-gradient(left, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
-	background: -moz-linear-gradient(left, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
-	background: -o-linear-gradient(left, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
-	background: linear-gradient(to right, rgba(198,0,3,0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198,0,3,0) 100%);
-}
+/* END блоки "Про нас" і "Контакти" */
 
 footer {
 	display: flex;

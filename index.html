@@ -116,6 +116,13 @@
 			<div>Привіт, Гість! &nbsp;<i class="fa fa-user-circle-o fa-fw fa-2x" aria-hidden="true"></i></div>
 		</nav>
 	</header><!--end mainHeader-->
+	<div id="detailProgr" class="modalDialog">
+		<a id="closeModal" title="Закрити" class="close">&#10060;</a>
+		<div>
+			<img src="img/noPhoto.png" alt="фотокартка відсутня">
+			<table></table>
+		</div>
+	</div><!--end detailProgr-->
 	<main class="mainWrap">
 		<article id="startPage">
 			<header>
@@ -185,7 +192,12 @@
 		</article><!--end skills-->
 		<article id="searchResult">
 			<h3>Список програмістів, рівень знань яких відповідає критеріям пошуку</h3>
-			<table id="selected"></table>
+			<table id="selected">
+				<thead>
+					<th>Прізвище та ім'я</th>
+					<th>Навички</th>
+				</thead>
+			</table>
 		</article><!--end searchResult-->
 		<article id="aboutThis">
 			<h2>Технічне завдання на тему "Система учёта знаний"</h2>
@@ -298,13 +310,13 @@
 	<hr>
 	<footer>
 		<div>
-			<a class="social facebook" target="_blank"><i class="fa fa-facebook"></i></a>
-			<a class="social twitter" target="_blank"><i class="fa fa-twitter"></i></a>
-			<a class="social vkontakte" target="_blank"><i class="fa fa-vk"></i></a>
-			<a class="social google" target="_blank"><i class="fa fa-google-plus"></i></a>
-			<a class="social ok" target="_blank"><i class="fa fa-odnoklassniki"></i></a>
+			<a class="social facebook" href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
+			<a class="social twitter" href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a>
+			<a class="social vkontakte" href="http://vk.com/" target="_blank"><i class="fa fa-vk"></i></a>
+			<a class="social google" href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus"></i></a>
+			<a class="social ok" href="http://www.odnoklassniki.ru/" target="_blank"><i class="fa fa-odnoklassniki"></i></a>
 		</div>
-		<p>Copyright 2017 "Система обліку знань"</p>
+		<p>Copyright 2018 "Система обліку знань"</p>
 	</footer>
 
 	<script type="text/javascript">

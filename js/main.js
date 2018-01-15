@@ -1,6 +1,7 @@
 var map,						// карта Google
-	//knowledges = [], // масив напрямків знань
-	programmers = []; // масив користувачів (програмістів)
+	//knowledges = [],	// масив напрямків знань
+	programmers = [],	// масив користувачів (програмістів)
+	selected = [];		// масив результатів пошуку
 
 function getData() {
 	// читання даних з JSON-файлу і їх запис у масиви
@@ -348,6 +349,41 @@ $(document).ready(function() {
 		}, false);
 	}
 
+	// EventListener натискання кнопки миші на таблиці результатів пошуку програмістів
+	var tableProgr = document.getElementById('selected');
+	if (tableProgr.addEventListener) {
+		tableProgr.addEventListener("click", function(e) {
+			if (e.target.tagName == "TD") {
+				// модальне вікно з детальною інформацією про програміста
+				var i = parseInt(e.target.parentNode.getElementsByTagName('td')[0].innerText);
+				$('#detailProgr').find('tr').remove();
+				var tempSkill = "";
+				for (var key in selected[i].skill) {
+					if (tempSkill) {
+						tempSkill += ", ";
+					}
+					tempSkill += key + " (" + selected[i].skill[key] + "/10)";
+				}
+				$("#detailProgr table").append("<tr><td>Прізвище та ім'я:</td><td>" + selected[i].name +
+					'</td></tr><tr><td>Дата народження:</td><td>' + selected[i].birth +
+					'</td></tr><tr><td>e-mail:</td><td><a href="mailto:' + selected[i].email + '">' +
+					selected[i].email + '</a></td></tr><tr><td>Досвід роботи (років):</td><td>' +
+					selected[i].experience + '</td></tr><tr><td>Навички:</td><td>' + tempSkill + '</td></tr>');
+				$(".mainHeader").css('display', 'none');
+				$("#detailProgr").css('display', 'block');
+			}
+		}, false);
+	}
+
+	// закриття модального вікна
+	var closeModal = document.getElementById('closeModal');
+	if (closeModal.addEventListener) {
+		closeModal.addEventListener("click", function() {
+			$("#detailProgr").css('display', 'none');
+			$(".mainHeader").css('display', 'block');
+		}, false);
+	}
+
 	// EventListener натискання кнопок "Зберегти", "Відмінити", "Шукати", "Видалити"
 	var buttonClick = document.getElementById('skills');
 	if (buttonClick.addEventListener) {
@@ -357,7 +393,7 @@ $(document).ready(function() {
 				// вибірка всіх відмічених чекбоксів
 				var nameId = $(".it_type:checked");
 				if (nameId[0]) {
-					var selected = []; // масив результатів пошуку
+					selected = [];
 					var flag;
 					for (var i = 0; i < programmers.length; i++) {
 						flag = true;
@@ -374,9 +410,9 @@ $(document).ready(function() {
 					}
 					if (selected.length) {
 						// видалення рядків таблиці з попереднього пошуку
-						$('#selected').find('tr').remove();
+						$('#selected').find('tbody').remove();
 						// вставка нової таблиці
-						$('#selected').append("<thead><th>Ім'я</th><th>Дата народ&shy;ження</th><th>e-mail</th><th>Навички</th></thead>");
+						$('#selected').append('<tbody>');
 						for (var i = 0; i < selected.length; i++) {
 							var tempSkill = "";
 							for (var key in selected[i].skill) {
@@ -385,13 +421,12 @@ $(document).ready(function() {
 								}
 								tempSkill += key + " (" + selected[i].skill[key] + "/10)";
 							}
-							$('#selected').append('<tr><td>' + selected[i].name + '</td><td>' + selected[i].birth +
-								'</td><td><a href="mailto:' + selected[i].email + '">' + selected[i].email +
-								'</a></td><td>' + tempSkill + '</td></tr>');
+							$('#selected').append('<tr><td>' + i + '</td><td>' + selected[i].name + '</td><td>' + tempSkill + '</td></tr>');
 							if ($("#searchResult").is(':hidden')) {
 								$("#searchResult").slideToggle();
 							}
 						}
+						$('#selected').append("</tbody>");
 					} else {
 						if (!$("#searchResult").is(':hidden')) {
 							$("#searchResult").hide();
