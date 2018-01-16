@@ -7,11 +7,8 @@
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<link rel="stylesheet" href="css/font-awesome.css" type="text/css">
-	
-	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEza8bTh7pp5mOnw3lLfhZL3s4CbELWq4"></script>
+
 	<script type="text/javascript" src="js/lodash.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
 
 	<script type="text/template" data-name="DataProgrammer">
 		<!-- TEMPLATE для додавання полів блоку введення даних про нового програміста -->
@@ -117,10 +114,10 @@
 		</nav>
 	</header><!--end mainHeader-->
 	<div id="detailProgr" class="modalDialog">
-		<a id="closeModal" title="Закрити" class="close">&#10060;</a>
 		<div>
 			<img src="img/noPhoto.png" alt="фотокартка відсутня">
 			<table></table>
+			<a id="closeModal" title="Закрити" class="close">&#10060;</a>
 		</div>
 	</div><!--end detailProgr-->
 	<main class="mainWrap">
@@ -192,14 +189,14 @@
 		</article><!--end skills-->
 		<article id="searchResult">
 			<h3>Список програмістів, рівень знань яких відповідає критеріям пошуку</h3>
-			<table id="selected">
+			<table id="selected" class="selected">
 				<thead>
-					<th>Прізвище та ім'я</th>
+					<th title="Натисніть для зміни порядку сортування">Прізвище та ім'я</th>
 					<th>Навички</th>
 				</thead>
 			</table>
 		</article><!--end searchResult-->
-		<article id="aboutThis">
+		<article id="aboutThis" class="aboutThis">
 			<h2>Технічне завдання на тему "Система учёта знаний"</h2>
 			<h4>Пользователи («программисты») указывают и оценивают свои знания в различных (сгруппированных) областях.</h4>
 			<p><h3>Дополнительно:</h3>
@@ -251,7 +248,7 @@
 			<header>
 				<h2>ЗВОРОТНІЙ ЗВ'ЯЗОК</h2>
 			</header>
-			<div id="map_canvas"></div>
+			<div id="map_canvas" class="map_canvas"></div>
 			<section class="contacts">
 				<div>
 					<div class="contact_block">
@@ -308,16 +305,21 @@
 		</article><!--end contacts-->
 	</main><!--end mainWrap-->
 	<hr>
-	<footer>
+	<footer class="mainFooter">
 		<div>
-			<a class="social facebook" href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a>
-			<a class="social twitter" href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a>
-			<a class="social vkontakte" href="http://vk.com/" target="_blank"><i class="fa fa-vk"></i></a>
-			<a class="social google" href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus"></i></a>
-			<a class="social ok" href="http://www.odnoklassniki.ru/" target="_blank"><i class="fa fa-odnoklassniki"></i></a>
+			<a class="social facebook" href="https://www.facebook.com/" title="Поділитися у Facebook"><i class="fa fa-facebook"></i></a>
+			<a class="social twitter" href="https://twitter.com/" title="Розповісти у Twitter"><i class="fa fa-twitter"></i></a>
+			<a class="social vkontakte" href="https://vk.com/" title="Поділитися у Вконтакте"><i class="fa fa-vk"></i></a>
+			<a class="social google" href="https://plus.google.com/" title="Поширити у Google+"><i class="fa fa-google-plus"></i></a>
+			<a class="social odnoklassniki" href="https://ok.ru/" title="Розповісти в Однокласниках"><i class="fa fa-odnoklassniki"></i></a>
 		</div>
-		<p>Copyright 2018 "Система обліку знань"</p>
+		<p>2017-2018 &copy; "Система обліку знань"</p>
 	</footer>
+
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEza8bTh7pp5mOnw3lLfhZL3s4CbELWq4"></script>
+	<!--script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEza8bTh7pp5mOnw3lLfhZL3s4CbELWq4&callback=initMap"></script-->
+	<script type="text/javascript" src="js/main.js"></script>
 
 	<script type="text/javascript">
 		// дані для TEMPLATE-вставки

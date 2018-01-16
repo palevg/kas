@@ -1,4 +1,5 @@
 var map,						// карта Google
+	sorting = 0,			// мітка сортування масиву
 	//knowledges = [],	// масив напрямків знань
 	programmers = [],	// масив користувачів (програмістів)
 	selected = [];		// масив результатів пошуку
@@ -22,7 +23,7 @@ function updateSkills() {
 		$(this).attr('min', '1');
 		$(this).attr('max', '10');
 		$(this).attr('value', '1');
-		$(this).attr('title', 'вкажіть свій рівень (від 1 до 10)');
+		$(this).attr('title', '1 з 10-ти');
 	});
 	/* встановлюємо інтерактивну спливаючу підказку для полів типу RANGE */
 	$(".skills input[type=range]").change(function() {
@@ -64,7 +65,7 @@ function validField(fieldName, fieldRe) {
 }
 
 function confirmCancel(nextBlock) {
-	// перевірка, чи користувач знаходиться на сторінці вводу даних про нового програміста
+	// перевірка, чи користувач знаходиться на сторінці вводу нових даних
 	if ($("#newProgrammer").is(':hidden') && $("#newSkill").is(':hidden')) {
 		displayBlocks(nextBlock);
 		return true;
@@ -123,7 +124,7 @@ $(document).ready(function() {
 	});
 	// END головне меню
 
-	/* завантаження сторінки */
+	/* перше завантаження сторінки */
 	displayBlocks("#startPage");
 
 	/* анімація для слайдера */
@@ -156,6 +157,7 @@ $(document).ready(function() {
 
 	updateSkills();
 
+	/* ------------ще в роботі----------- */
 	var joinReg = document.getElementsByClassName('joinReg');
 	if (joinReg[0].addEventListener) {
 		joinReg[0].addEventListener("click", function() {
@@ -183,6 +185,7 @@ $(document).ready(function() {
 					$("#progEmail").val('');
 					$("#progExperience").val('0');
 					$(".it_type").each(function(index, element) {
+						$(element).prop("disabled", false);
 						$(element).prop("checked", false);
 						checkIT($(element).attr('id'));
 					});
@@ -211,6 +214,7 @@ $(document).ready(function() {
 				if (confirmCancel("#skills")) {
 					// обнуляємо поля після попереднього вводу
 					$(".it_type").each(function(index, element) {
+						$(element).prop("disabled", false);
 						$(element).prop("checked", false);
 						checkIT($(element).attr('id'));
 					});
@@ -240,6 +244,7 @@ $(document).ready(function() {
 					$("#knowledgeID").next().css('color', 'rgba(255, 0, 0, 0)');
 					$("#knowledgeID").val('');
 					$(".it_type").each(function(index, element) {
+						$(element).prop("disabled", true);
 						$(element).prop("checked", false);
 						checkIT($(element).attr('id'));
 					});
@@ -268,6 +273,7 @@ $(document).ready(function() {
 				if (confirmCancel("#skills")) {
 					// обнуляємо поля після попереднього вводу
 					$(".it_type").each(function(index, element) {
+						$(element).prop("disabled", false);
 						$(element).prop("checked", false);
 						checkIT($(element).attr('id'));
 					});
@@ -349,6 +355,33 @@ $(document).ready(function() {
 		}, false);
 	}
 
+	// формування списку навичок програміста
+	function setSkills(pos) {
+		var list = "";
+		for (var key in selected[pos].skill) {
+			if (list) {
+				list += ", ";
+			}
+			list += key + " (" + selected[pos].skill[key] + "/10)";
+		}
+		return list;
+	}
+
+	// вставка таблиці в DOM
+	function insertTable() {
+		// видалення рядків таблиці з попереднього пошуку
+		$('#selected').find('tbody').remove();
+		// вставка нової таблиці
+		$('#selected').append('<tbody>');
+		for (var i = 0; i < selected.length; i++) {
+			$('#selected').append('<tr><td>' + i + '</td><td>' + selected[i].name + '</td><td>' + setSkills(i) + '</td></tr>');
+			if ($("#searchResult").is(':hidden')) {
+				$("#searchResult").slideToggle();
+			}
+		}
+		$('#selected').append("</tbody>");
+	}
+
 	// EventListener натискання кнопки миші на таблиці результатів пошуку програмістів
 	var tableProgr = document.getElementById('selected');
 	if (tableProgr.addEventListener) {
@@ -357,20 +390,22 @@ $(document).ready(function() {
 				// модальне вікно з детальною інформацією про програміста
 				var i = parseInt(e.target.parentNode.getElementsByTagName('td')[0].innerText);
 				$('#detailProgr').find('tr').remove();
-				var tempSkill = "";
-				for (var key in selected[i].skill) {
-					if (tempSkill) {
-						tempSkill += ", ";
-					}
-					tempSkill += key + " (" + selected[i].skill[key] + "/10)";
-				}
 				$("#detailProgr table").append("<tr><td>Прізвище та ім'я:</td><td>" + selected[i].name +
 					'</td></tr><tr><td>Дата народження:</td><td>' + selected[i].birth +
 					'</td></tr><tr><td>e-mail:</td><td><a href="mailto:' + selected[i].email + '">' +
 					selected[i].email + '</a></td></tr><tr><td>Досвід роботи (років):</td><td>' +
-					selected[i].experience + '</td></tr><tr><td>Навички:</td><td>' + tempSkill + '</td></tr>');
+					selected[i].experience + '</td></tr><tr><td>Навички:</td><td>' + setSkills(i) + '</td></tr>');
 				$(".mainHeader").css('display', 'none');
 				$("#detailProgr").css('display', 'block');
+			}
+			if (e.target.innerText == "Прізвище та ім'я") {
+				(sorting == 0 || sorting == -1) ? sorting = 1 : sorting = -1;
+				selected.sort(function compareName(a, b) {
+					if (a.name < b.name) return -1 * sorting;
+					if (a.name > b.name) return 1 * sorting;
+					return 0;
+				});
+				insertTable();
 			}
 		}, false);
 	}
@@ -409,24 +444,7 @@ $(document).ready(function() {
 						}
 					}
 					if (selected.length) {
-						// видалення рядків таблиці з попереднього пошуку
-						$('#selected').find('tbody').remove();
-						// вставка нової таблиці
-						$('#selected').append('<tbody>');
-						for (var i = 0; i < selected.length; i++) {
-							var tempSkill = "";
-							for (var key in selected[i].skill) {
-								if (tempSkill) {
-									tempSkill += ", ";
-								}
-								tempSkill += key + " (" + selected[i].skill[key] + "/10)";
-							}
-							$('#selected').append('<tr><td>' + i + '</td><td>' + selected[i].name + '</td><td>' + tempSkill + '</td></tr>');
-							if ($("#searchResult").is(':hidden')) {
-								$("#searchResult").slideToggle();
-							}
-						}
-						$('#selected').append("</tbody>");
+						insertTable();
 					} else {
 						if (!$("#searchResult").is(':hidden')) {
 							$("#searchResult").hide();
@@ -532,6 +550,39 @@ $(document).ready(function() {
 					}
 				} else {
 					alert('Не вибрано жодної області знань для видалення!');
+				}
+			}
+		}, false);
+	}
+
+	// EventListener натискання кнопок соцмереж
+	var social = document.getElementsByClassName('mainFooter');
+	if (social[0].addEventListener) {
+		social[0].addEventListener("click", function(e) {
+			e.preventDefault();
+			var share = "";
+			if (e.target.tagName == "A") {
+				share = e.target.getAttribute('class');
+			}
+			if (e.target.tagName == "I") {
+				share = e.target.parentNode.getAttribute('class');
+			}
+			if (share) {
+				var shareWindow;
+				if (share.indexOf("facebook") != -1) {
+					shareWindow = window.open('https://www.facebook.com/sharer/sharer.php?url=' + document.URL);
+				}
+				if (share.indexOf("twitter") != -1) {
+					shareWindow = window.open('https://twitter.com/share?url=' + document.URL);
+				}
+				if (share.indexOf("google") != -1) {
+					shareWindow = window.open('https://plus.google.com/share?url=' + document.URL);
+				}
+				if (share.indexOf("vkontakte") != -1) {
+					shareWindow = window.open('https://vk.com/share.php?url=' + document.URL);
+				}
+				if (share.indexOf("odnoklassniki") != -1) {
+					shareWindow = window.open('http://www.ok.ru/dk?st.cmd=addShare&st.s=1&st._surl=' + document.URL);
 				}
 			}
 		}, false);
