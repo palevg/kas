@@ -1,6 +1,9 @@
 var map,						// карта Google
 	sorting = 0,			// мітка сортування масиву
 	//knowledges = [],	// масив напрямків знань
+	users = [],				// масив зареєстрованих користувачів
+	currentUser = "",	// користувач, що залогінився
+	userLevel = "",		// рівень доступу користувача, що залогінився
 	programmers = [],	// масив користувачів (програмістів)
 	selected = [];		// масив результатів пошуку
 
@@ -8,6 +11,7 @@ function getData() {
 	// читання даних з JSON-файлу і їх запис у масиви
 	$.getJSON('http://cevarto.com.ua/data.json', function(data) {
 		//knowledges = data.knowledges;
+		users = data.users;
 		programmers = data.programmers;
 	});
 }
@@ -55,15 +59,6 @@ function displayBlocks(block) {
 	}
 }
 
-function validField(fieldName, fieldRe) {
-	/* перевірка полів введення даних на валідність */
-	if (fieldRe.test($(fieldName).val())) {
-		$(fieldName).next().css('color', 'rgba(0, 255, 127, 1)'); // "галочка" зеленого кольору
-	} else {
-		$(fieldName).next().css('color', 'rgba(255, 0, 0, 1)'); // "галочка" червоного кольору
-	}
-}
-
 function confirmCancel(nextBlock) {
 	// перевірка, чи користувач знаходиться на сторінці вводу нових даних
 	if ($("#newProgrammer").is(':hidden') && $("#newSkill").is(':hidden')) {
@@ -77,6 +72,20 @@ function confirmCancel(nextBlock) {
 		} else {
 			return false;
 		}
+	}
+}
+
+function loginStatus(active) {
+	if (active) {
+		$('#mi-signIn').hide();
+		$('#mi-registration').hide();
+		$('#mi-userInfo').show();
+		$('#mi-signOut').show();
+	} else {
+		$('#mi-signIn').show();
+		$('#mi-registration').show();
+		$('#mi-userInfo').hide();
+		$('#mi-signOut').hide();
 	}
 }
 
@@ -115,13 +124,15 @@ $(document).ready(function() {
 		//e.preventDefault();
 		menu.slideToggle();
 	});
-	
+
 	$(window).resize(function() {
 		var w = $(window).width();
 		if (w > 760 && menu.is(':hidden')) {
 			menu.removeAttr('style');
 		}
 	});
+
+	loginStatus(false);
 	// END головне меню
 
 	/* перше завантаження сторінки */
@@ -166,10 +177,16 @@ $(document).ready(function() {
 	}
 
 	// EventListener натискання пунктів головного меню
-	var mainMenu = document.getElementsByClassName('menu');
+	var mainMenu = document.getElementsByTagName('nav');
 	if (mainMenu[0].addEventListener) {
 		mainMenu[0].addEventListener("click", function(e) {
-			var place = e.target.parentNode.getAttribute('id');
+			var place;
+			if (e.target.tagName == 'SPAN') {
+				place = e.target.parentNode.getAttribute('id');
+			}
+			if (e.target.tagName == 'I') {
+				place = e.target.parentNode.parentNode.getAttribute('id');
+			}
 			if (place == 'mi-main') {
 				// показуємо головну сторінку сайту
 				confirmCancel("#startPage");
@@ -178,10 +195,9 @@ $(document).ready(function() {
 				// завдання "додавання нового програміста"
 				if (confirmCancel("#newProgrammer")) {
 					// обнуляємо поля після попереднього вводу
-					$("#progName").next().css('color', 'rgba(255, 0, 0, 0)');
 					$("#progName").val('');
-					$("#progBirth").val('1991-09-01');
-					$("#progEmail").next().css('color', 'rgba(255, 0, 0, 0)');
+					$("#progBirth").val('');
+					//$("#progBirth").val('1991-09-01');
 					$("#progEmail").val('');
 					$("#progExperience").val('0');
 					$(".it_type").each(function(index, element) {
@@ -239,9 +255,7 @@ $(document).ready(function() {
 				// завдання "додавання нової області знань"
 				if (confirmCancel("#newSkill")) {
 					// обнуляємо поля після попереднього вводу
-					$("#knowledgeName").next().css('color', 'rgba(255, 0, 0, 0)');
 					$("#knowledgeName").val('');
-					$("#knowledgeID").next().css('color', 'rgba(255, 0, 0, 0)');
 					$("#knowledgeID").val('');
 					$(".it_type").each(function(index, element) {
 						$(element).prop("disabled", true);
@@ -304,54 +318,19 @@ $(document).ready(function() {
 					google.maps.event.trigger(map, 'resize');
 				}
 			}
-		}, false);
-	}
-
-	var progName = document.getElementById('progName');
-	if (progName.addEventListener) {	/* перевірка поля ПІБ на валідність */
-		// при вводі даних, для наглядності
-		progName.addEventListener("keypress", function() {
-			validField('#progName', /^[A-ZА-ЯЁІЇ][a-zа-яёії]+\s[A-ZА-ЯЁІЇ][a-zа-яёії]+$/);
-		}, false);
-		// при покиданні поля, результуюче
-		progName.addEventListener("blur", function() {
-			validField('#progName', /^[A-ZА-ЯЁІЇ][a-zа-яёії]+\s[A-ZА-ЯЁІЇ][a-zа-яёії]+$/);
-		}, false);
-	}
-
-	var progEmail = document.getElementById('progEmail');
-	if (progEmail.addEventListener) {	/* перевірка поля Email на валідність */
-		// при вводі даних, для наглядності
-		progEmail.addEventListener("keypress", function() {
-			validField('#progEmail', /^[\w]{1}[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i);
-		}, false);
-		// при покиданні поля, результуюче
-		progEmail.addEventListener("blur", function() {
-			validField('#progEmail', /^[\w]{1}[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i);
-		}, false);
-	}
-
-	var knowledgeID = document.getElementById('knowledgeID');
-	if (knowledgeID.addEventListener) {	/* перевірка поля ID на валідність */
-		// при вводі даних, для наглядності
-		knowledgeID.addEventListener("keypress", function() {
-			validField('#knowledgeID', /^[\w-\.]+$/i);
-		}, false);
-		// при покиданні поля, результуюче
-		knowledgeID.addEventListener("blur", function() {
-			validField('#knowledgeID', /^[\w-\.]+$/i);
-		}, false);
-	}
-
-	var knowledgeName = document.getElementById('knowledgeName');
-	if (knowledgeName.addEventListener) {	/* перевірка поля NAME на валідність */
-		// при вводі даних, для наглядності
-		knowledgeName.addEventListener("keypress", function() {
-			validField('#knowledgeName', /^[А-ЯЁІЇа-яёії\w-\.]+$/i);
-		}, false);
-		// при покиданні поля, результуюче
-		knowledgeName.addEventListener("blur", function() {
-			validField('#knowledgeName', /^[А-ЯЁІЇа-яёії\w-\.]+$/i);
+			if (place == 'mi-signIn') {
+				$(".mainHeader").css('display', 'none');
+				$("#userSignin").css('display', 'block');
+			}
+			if (place == 'mi-signOut') {
+				if (confirm('Ви дійсно бажаєте вийти із системи?')) {
+					currentUser = "";
+					userLevel = "";
+					$(".user-block span")[0].innerText = "Гість";
+					loginStatus(false);
+					displayBlocks("#startPage");
+				}
+			}
 		}, false);
 	}
 
@@ -410,12 +389,42 @@ $(document).ready(function() {
 		}, false);
 	}
 
-	// закриття модального вікна
-	var closeModal = document.getElementById('closeModal');
-	if (closeModal.addEventListener) {
-		closeModal.addEventListener("click", function() {
-			$("#detailProgr").css('display', 'none');
-			$(".mainHeader").css('display', 'block');
+	// EventListener модального вікна
+	var modalBlocks = document.getElementById('modalBlocks');
+	if (modalBlocks.addEventListener) {
+		modalBlocks.addEventListener("click", function(e) {
+			if (e.target.tagName == "A") {
+				$(e.target.parentNode.parentNode).css('display', 'none');
+				$(".mainHeader").css('display', 'block');
+			}
+			if (e.target.getAttribute('id') == "btnSignin") {
+				if ($("#userSignin .modal-dialog__field:not(:valid)").length == 0) {
+					var ln = $("#userSignin .modal-dialog__field")[0].value;
+					var match = false;
+					for (var i = 0; i < users.length; i++) {
+						if (users[i].login == ln) {
+							match = true;
+							ln = $("#userSignin .modal-dialog__field")[1].value;
+							if (users[i].password == ln) {
+								currentUser = users[i].name;
+								userLevel = users[i].level;
+								$(".user-block span")[0].innerText = currentUser;
+								loginStatus(true);
+								$(e.target.parentNode.parentNode).css('display', 'none');
+								$(".mainHeader").css('display', 'block');
+							} else {
+								match = false;
+								break;
+							}
+						}
+					}
+					if (!match) {
+						alert('Користувача з такими login та паролем у системі немає.');
+					}
+				} else {
+					alert('Поля login та пароль не можуть бути пустими!');
+				}
+			}
 		}, false);
 	}
 
@@ -459,17 +468,9 @@ $(document).ready(function() {
 				confirmCancel("#startPage");
 			}
 			if (place == 'button_save') {
-				var valid = true; // флажок валідності заповнених полів
 				if (!$("#newProgrammer").is(':hidden')) {
 					// зберігання інформації про нового програміста
-					$('.dataProgrammer i').each(function(index) {
-		  			if ($(this).css('color') != 'rgb(0, 255, 127)') {
-		  				valid = false;	// якщо хоча б одна "галочка" не зелена - валідність не пройдена
-		  				return valid;
-		  			}
-		  			return valid;
-					});
-					if (valid) {
+					if ($('.dataProgrammer input:valid').length == 4) {
 						var nameId = $(".it_type:checked");	// вибірка всіх всіх відмічених чекбоксів
 						if (nameId[0]) {
 							var tempSkill = {};
@@ -497,14 +498,7 @@ $(document).ready(function() {
 					}
 				} else {
 					// зберігання інформації про нову область знань
-					$('.newSkill i').each(function(index) {
-		  			if ($(this).css('color') != 'rgb(0, 255, 127)') {
-		  				valid = false;	// якщо хоча б одна "галочка" не зелена - валідність не пройдена
-		  				return valid;
-		  			}
-		  			return valid;
-					});
-					if (valid) {
+					if ($('.newSkill input:valid').length == 2) {
 						var knowledgeID = $("#knowledgeID").val();
 						var nameId = $("#it_" + knowledgeID);
 						if (nameId[0]) {

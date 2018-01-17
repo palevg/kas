@@ -4,11 +4,12 @@
 	<meta charset="UTF-8">
 	<title>Система обліку знань</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+
+	<link rel="shortcut icon" href="img/favicon.png" type="image/png">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<link rel="stylesheet" href="css/font-awesome.css" type="text/css">
 
-	<script type="text/javascript" src="js/lodash.js"></script>
+	<script type="text/javascript" src="js/lodash.min.js"></script>
 
 	<script type="text/template" data-name="DataProgrammer">
 		<!-- TEMPLATE для додавання полів блоку введення даних про нового програміста -->
@@ -18,6 +19,9 @@
 				<input type="<%= rec.type %>" id="<%= rec.id %>"
 				<% if (rec.placeholder) { %>
 					placeholder="<%= rec.placeholder %>"
+				<% } %>
+				<% if (rec.pattern) { %>
+					pattern="<%= rec.pattern %>"
 				<% } %>
 				<% if (rec.min == "0") { %>
 					min="<%= rec.min %>"
@@ -36,7 +40,8 @@
 				<% if (rec.label == "Виберіть розділ") { %>
 					<select class="skillGroups"></select>
 				<% } else { %>
-					<input type="text" id="<%= rec.id %>" maxlength="16" required>
+					<input type="text" id="<%= rec.id %>" maxlength="16"
+					pattern="<%= rec.pattern %>" required>
 				<% } %>
 				<i class="fa fa-check fa-fw" aria-hidden="true"></i>
 			</div>
@@ -110,16 +115,42 @@
 					</li>
 				</ul>
 			</div>
-			<div>Привіт, Гість! &nbsp;<i class="fa fa-user-circle-o fa-fw fa-2x" aria-hidden="true"></i></div>
+			<div class="user-block">
+				Привіт,&nbsp;<span>Гість</span>! &nbsp;<i class="fa fa-user-circle-o fa-fw fa-2x" aria-hidden="true"></i>
+				<ul>
+					<li id="mi-signIn"><span><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>&nbsp;Вхід</span></li>
+					<li id="mi-registration"><span><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;Реєстрація</span></li>
+					<li id="mi-userInfo"><span><i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>&nbsp;Кабінет</span></li>
+					<li id="mi-signOut"><span><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>&nbsp;Вихід</span></li>
+				</ul>
+			</div>
 		</nav>
 	</header><!--end mainHeader-->
-	<div id="detailProgr" class="modalDialog">
-		<div>
-			<img src="img/noPhoto.png" alt="фотокартка відсутня">
-			<table></table>
-			<a id="closeModal" title="Закрити" class="close">&#10060;</a>
+
+	<!-- модальні вікна -->
+	<div id="modalBlocks">
+		<div id="userSignin" class="modal-dialog">
+			<div class="modal-dialog__content user-width">
+				<div>Введіть Ваш login:</div>
+				<input type="text" class="modal-dialog__field" required><br>
+				<div>Введіть Ваш пароль:</div>
+				<input type="password" class="modal-dialog__field" required><br>
+				<input id="btnSignin" type="button" class="button" value="Увійти">
+				<a class="modal-dialog__close" title="Закрити">&#10060;</a>
+			</div>
 		</div>
-	</div><!--end detailProgr-->
+		<!-- pattern="[A-Za-z0-9]{5,}" title="Кількість символів не менше 5-ти" -->
+		<div id="detailProgr" class="modal-dialog">
+			<div class="modal-dialog__content progr-width">
+				<img class="modal-dialog__img" src="img/noPhoto.png" alt="фотокартка відсутня">
+				<table class="modal-dialog__table"></table>
+				<a class="modal-dialog__close" title="Закрити">&#10060;</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- основні блоки сторінки -->
+
 	<main class="mainWrap">
 		<article id="startPage">
 			<header>
@@ -323,13 +354,16 @@
 
 	<script type="text/javascript">
 		// дані для TEMPLATE-вставки
-		var arr = [{id: "progName", label: "Прізвище та ім'я", type: "text", placeholder: "Шевченко Тарас"},
+		var arr = [{id: "progName", label: "Прізвище та ім'я", type: "text", placeholder: "Шевченко Тарас",
+					pattern: "[A-ZА-ЯЁІЇ][a-zа-яёії]+\\s[A-ZА-ЯЁІЇ][a-zа-яёії]+"},
 				{id: "progBirth", label: "Дата народження", type: "date"},
-				{id: "progEmail", label: "E-mail", type: "email", placeholder: "Ваш e-mail"},
+				{id: "progEmail", label: "E-mail", type: "email", placeholder: "Ваш e-mail",
+					pattern: "[A-Za-z0-9_][A-Za-z0-9-_\\.]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,4}"},
 				{id: "progExperience", label: "Досвід роботи (років)", type: "number", min: "0"}];
 		document.getElementsByClassName('dataProgrammer')[0].innerHTML = window.Templates.DataProgrammer(arr);
-		arr = [{label: "Виберіть розділ"}, {id: "knowledgeName", label: "Вкажіть назву нової області знань"},
-				{id: "knowledgeID", label: "Вкажіть ідентифікатор (латиницею)"}];
+		arr = [{label: "Виберіть розділ"}, {id: "knowledgeName", label: "Вкажіть назву нової області знань",
+					pattern: "[A-Za-zА-ЯЁІЇа-яёії0-9-\\.\\s]+"},
+				{id: "knowledgeID", label: "Вкажіть ідентифікатор (латиницею)", pattern: "[A-Za-z0-9-]+"}];
 		document.getElementsByClassName('newSkill')[0].innerHTML = window.Templates.DataSkill(arr);
 		arr = [{legend: "Мови програмування", items: [{name: "C", text: "C"}, {name: "CPlus", text: "C++"},
 				{name: "CSh", text: "C#"}, {name: "ES6", text: "ECMAScript 6"}, {name: "JS", text: "JavaScript"},
