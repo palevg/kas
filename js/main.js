@@ -4,7 +4,6 @@ var map,						// карта Google
 	users = [],				// масив зареєстрованих користувачів
 	currentUser = "",	// користувач, що залогінився
 	userLevel = "",		// рівень доступу користувача, що залогінився
-	programmers = [],	// масив користувачів (програмістів)
 	selected = [];		// масив результатів пошуку
 
 function getData() {
@@ -12,7 +11,6 @@ function getData() {
 	$.getJSON('http://cevarto.com.ua/data.json', function(data) {
 		//knowledges = data.knowledges;
 		users = data.users;
-		programmers = data.programmers;
 	});
 }
 
@@ -319,8 +317,11 @@ $(document).ready(function() {
 				}
 			}
 			if (place == 'mi-signIn') {
+				$("#userSignin .modal-dialog__field")[0].value = '';
+				$("#userSignin .modal-dialog__field")[1].value = '';
 				$(".mainHeader").css('display', 'none');
 				$("#userSignin").css('display', 'block');
+				displayBlocks("#startPage");
 			}
 			if (place == 'mi-signOut') {
 				if (confirm('Ви дійсно бажаєте вийти із системи?')) {
@@ -406,7 +407,7 @@ $(document).ready(function() {
 							match = true;
 							ln = $("#userSignin .modal-dialog__field")[1].value;
 							if (users[i].password == ln) {
-								currentUser = users[i].name;
+								users[i].name.indexOf(' ') == -1 ? currentUser = users[i].name : currentUser = users[i].name.slice(0, users[i].name.indexOf(' '));
 								userLevel = users[i].level;
 								$(".user-block span")[0].innerText = currentUser;
 								loginStatus(true);
@@ -439,17 +440,17 @@ $(document).ready(function() {
 				if (nameId[0]) {
 					selected = [];
 					var flag;
-					for (var i = 0; i < programmers.length; i++) {
+					for (var i = 0; i < users.length; i++) {
 						flag = true;
 						$(".it_type:checked").each(function(index, element) {
 							nameId = $(element).attr('id');
 							var skillName = $('label[for="' + nameId + '"]').text();
-							if (!programmers[i].skill[skillName] || parseInt(programmers[i].skill[skillName]) < parseInt($("#" + nameId + "_range").val())) {
+							if (!users[i].skill[skillName] || parseInt(users[i].skill[skillName]) < parseInt($("#" + nameId + "_range").val())) {
 								flag = false;
 							}
 						});
 						if (flag) {
-							selected.push(programmers[i]);
+							selected.push(users[i]);
 						}
 					}
 					if (selected.length) {
@@ -484,12 +485,12 @@ $(document).ready(function() {
 							newRecord.email = $("#progEmail").val();
 							newRecord.experience = $("#progExperience").val();
 							newRecord.skill = tempSkill;
-							programmers.push(newRecord);
+							users.push(newRecord);
 							$(".it_type").each(function(index, element) {
 								checkIT($(element).attr('id'));
 							});
 							displayBlocks("#startPage");
-							alert('Дані про нового програміста успішно внесено до системи!\nНа даний час у базі даних є інформація щодо ' + programmers.length + ' програмістів.');
+							alert('Дані про нового програміста успішно внесено до системи!\nНа даний час у базі даних є інформація щодо ' + users.length + ' програмістів.');
 						} else {
 							alert('Не вибрано жодної навички для нового програміста!');
 						}
