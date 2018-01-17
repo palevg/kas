@@ -1,10 +1,10 @@
-var map,						// карта Google
-	sorting = 0,			// мітка сортування масиву
-	//knowledges = [],	// масив напрямків знань
-	users = [],				// масив зареєстрованих користувачів
+var users = [],			// масив зареєстрованих користувачів
 	currentUser = "",	// користувач, що залогінився
 	userLevel = "",		// рівень доступу користувача, що залогінився
-	selected = [];		// масив результатів пошуку
+	selected = [],		// масив результатів пошуку
+	sorting = 0,			// мітка сортування масиву
+	//knowledges = [],	// масив напрямків знань
+	map;						// карта Google
 
 function getData() {
 	// читання даних з JSON-файлу і їх запис у масиви
@@ -74,6 +74,7 @@ function confirmCancel(nextBlock) {
 }
 
 function loginStatus(active) {
+	// відображення пунктів меню користувача в залежності від статусу входу
 	if (active) {
 		$('#mi-signIn').hide();
 		$('#mi-registration').hide();
@@ -85,6 +86,34 @@ function loginStatus(active) {
 		$('#mi-userInfo').hide();
 		$('#mi-signOut').hide();
 	}
+}
+
+function typeModalWindow() {
+	// відображення контенту модального вікна в залежності від входу/реєстрації
+	if ($('#userSignin .modal-dialog__changeSignin')[0].innerText == "Зареєструватись") {
+		$('#userSignin .modal-dialog__fieldset').show();
+		$('#repeatPass').show();
+		$('#btnSignin').hide();
+		$('#btnRegister').show();
+		$('#userSignin .modal-dialog__changeSignin')[0].innerText = "Увійти з паролем";
+	} else {
+		$('#userSignin .modal-dialog__fieldset').hide();
+		$('#repeatPass').hide();
+		$('#btnSignin').show();
+		$('#btnRegister').hide();
+		$('#userSignin .modal-dialog__changeSignin')[0].innerText = "Зареєструватись";
+	}
+	$('#userSignin .modal-dialog__field')[1].value = "";
+	$('#repeatPass .modal-dialog__field')[0].value = "";
+}
+
+function openModalWindow() {
+	// відкриття модального вікна і очищення полів
+	$("#userSignin .modal-dialog__field")[0].value = '';
+	$("#userSignin .modal-dialog__field")[1].value = '';
+	$("#userSignin .modal-dialog__field")[2].value = '';
+	$(".mainHeader").css('display', 'none');
+	$("#userSignin").css('display', 'block');
 }
 
 function initialize() {
@@ -161,16 +190,19 @@ $(document).ready(function() {
 		}, false);
 	}
 
-	/* зчитуємо дані з JSON */
+	// підготовка модального вікна входу
+	typeModalWindow();
+
+	// зчитуємо дані з JSON
 	getData();
 
 	updateSkills();
 
-	/* ------------ще в роботі----------- */
+	// перенаправлення із слайдера на вікно входу/реєстрації
 	var joinReg = document.getElementsByClassName('joinReg');
 	if (joinReg[0].addEventListener) {
 		joinReg[0].addEventListener("click", function() {
-			alert('Згодом тут буде реєстрація користувачів.');
+			openModalWindow();
 		}, false);
 	}
 
@@ -317,17 +349,24 @@ $(document).ready(function() {
 				}
 			}
 			if (place == 'mi-signIn') {
-				$("#userSignin .modal-dialog__field")[0].value = '';
-				$("#userSignin .modal-dialog__field")[1].value = '';
-				$(".mainHeader").css('display', 'none');
-				$("#userSignin").css('display', 'block');
-				displayBlocks("#startPage");
+				$('#userSignin .modal-dialog__changeSignin')[0].innerText = "Увійти з паролем";
+				typeModalWindow();
+				openModalWindow();
+			}
+			if (place == 'mi-registration') {
+				$('#userSignin .modal-dialog__changeSignin')[0].innerText = "Зареєструватись";
+				typeModalWindow();
+				openModalWindow();
+			}
+			if (place == 'mi-userInfo') {
+				alert('зовсім скоро тут все працюватиме )))');
 			}
 			if (place == 'mi-signOut') {
 				if (confirm('Ви дійсно бажаєте вийти із системи?')) {
 					currentUser = "";
 					userLevel = "";
 					$(".user-block span")[0].innerText = "Гість";
+					$(joinReg[0]).show();
 					loginStatus(false);
 					displayBlocks("#startPage");
 				}
@@ -394,12 +433,18 @@ $(document).ready(function() {
 	var modalBlocks = document.getElementById('modalBlocks');
 	if (modalBlocks.addEventListener) {
 		modalBlocks.addEventListener("click", function(e) {
-			if (e.target.tagName == "A") {
+			// закриття модального вікна
+			if (e.target.getAttribute('class') == "modal-dialog__close") {
 				$(e.target.parentNode.parentNode).css('display', 'none');
 				$(".mainHeader").css('display', 'block');
 			}
+			// зміна контенту в залежності від режиму вхід/реєстрація
+			if (e.target.getAttribute('class') == "modal-dialog__changeSignin") {
+				typeModalWindow();
+			}
+			// натискання кнопки входу для зареєстрованих
 			if (e.target.getAttribute('id') == "btnSignin") {
-				if ($("#userSignin .modal-dialog__field:not(:valid)").length == 0) {
+				if ($("#userSignin .modal-dialog__field:not(:valid)").length == 1) {
 					var ln = $("#userSignin .modal-dialog__field")[0].value;
 					var match = false;
 					for (var i = 0; i < users.length; i++) {
@@ -407,12 +452,15 @@ $(document).ready(function() {
 							match = true;
 							ln = $("#userSignin .modal-dialog__field")[1].value;
 							if (users[i].password == ln) {
-								users[i].name.indexOf(' ') == -1 ? currentUser = users[i].name : currentUser = users[i].name.slice(0, users[i].name.indexOf(' '));
+								userLevel = users[i].name.indexOf(' ');
+								userLevel == -1 ? currentUser = users[i].name : currentUser = users[i].name.slice(0, userLevel);
 								userLevel = users[i].level;
 								$(".user-block span")[0].innerText = currentUser;
 								loginStatus(true);
 								$(e.target.parentNode.parentNode).css('display', 'none');
 								$(".mainHeader").css('display', 'block');
+								$(joinReg[0]).hide();
+								displayBlocks("#startPage");
 							} else {
 								match = false;
 								break;
@@ -424,6 +472,38 @@ $(document).ready(function() {
 					}
 				} else {
 					alert('Поля login та пароль не можуть бути пустими!');
+				}
+			}
+			if (e.target.getAttribute('id') == "btnRegister") {
+				// натискання кнопки реєстрації нового користувача
+				if ($("#userSignin .modal-dialog__field:not(:valid)").length == 0) {
+					var ln = $("#userSignin .modal-dialog__field")[0].value;
+					var match = true;
+					for (var i = 0; i < users.length; i++) {
+						if (users[i].login == ln) {
+							match = false;
+							alert('Користувача із таким login-іменем вже зареєстровано!\nДля завершення реєстрації необхідно його змінити.');
+							break;
+						}
+					}
+					if (match) {
+						if ($("#userSignin .modal-dialog__field")[1].value == $("#userSignin .modal-dialog__field")[2].value) {
+							var newRecord = {};
+							newRecord.name = "новенький";
+							newRecord.login = ln;
+							newRecord.password = $("#userSignin .modal-dialog__field")[1].value;
+							newRecord.level = $("#userSignin .modal-dialog__fieldset input:checked")[0].value;
+							newRecord.skill = {};
+							users.push(newRecord);
+							$(e.target.parentNode.parentNode).css('display', 'none');
+							$(".mainHeader").css('display', 'block');
+							alert('Вітаємо! Ви успішно зареєструвались у системі.\nТепер Ви можете увійти, використовуючи Ваші login та пароль.');
+						} else {
+							alert('Введені паролі не збігаються! Спробуйте ввести їх ще раз.');
+						}
+					}
+				} else {
+					alert('Поля login та паролів не можуть бути пустими!');
 				}
 			}
 		}, false);

@@ -109,7 +109,7 @@
 					<li>
 						<span><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;Про нас</span>
 						<ul>
-							<li id="mi-about"><span><i class="fa fa-thumb-tack fa-fw" aria-hidden="true"></i>&nbsp;Тех.завдання</span></li>
+							<li id="mi-about"><span><i class="fa fa-thumb-tack fa-fw" aria-hidden="true"></i>&nbsp;Технічне завдання</span></li>
 							<li id="mi-contacts"><span><i class="fa fa-envelope fa-fw" aria-hidden="true"></i>&nbsp;Контакти</span></li>
 						</ul>
 					</li>
@@ -131,15 +131,29 @@
 	<div id="modalBlocks">
 		<div id="userSignin" class="modal-dialog">
 			<div class="modal-dialog__content user-width">
-				<div>Введіть Ваш login:</div>
-				<input type="text" class="modal-dialog__field" required><br>
-				<div>Введіть Ваш пароль:</div>
-				<input type="password" class="modal-dialog__field" required><br>
+				<fieldset class="modal-dialog__fieldset">
+					<legend>Ви є...</legend>
+					<label><input type="radio" name="who" value="low" checked>програміст</label><br>
+					<label><input type="radio" name="who" value="middle">менеджер</label>
+				</fieldset>
+				<div>
+					Введіть Ваш login:
+					<input type="text" class="modal-dialog__field" required>
+				</div>
+				<div>
+					Введіть Ваш пароль:
+					<input type="password" class="modal-dialog__field" required>
+				</div>
+				<div id="repeatPass">
+					Повторіть пароль:
+					<input type="password" class="modal-dialog__field" required>
+				</div>
 				<input id="btnSignin" type="button" class="button" value="Увійти">
+				<input id="btnRegister" type="button" class="button" value="Реєстрація">
+				<span class="modal-dialog__changeSignin"></span>
 				<a class="modal-dialog__close" title="Закрити">&#10060;</a>
 			</div>
 		</div>
-		<!-- pattern="[A-Za-z0-9]{5,}" title="Кількість символів не менше 5-ти" -->
 		<div id="detailProgr" class="modal-dialog">
 			<div class="modal-dialog__content progr-width">
 				<img class="modal-dialog__img" src="img/noPhoto.png" alt="фотокартка відсутня">
@@ -162,25 +176,25 @@
 				<input type="radio" id="selector3" name="imageInput">
 				<input type="radio" id="selector4" name="imageInput">
 				<input type="radio" id="selector5" name="imageInput">
-				<div class="item">
+				<div class="slider__item">
 					<img src="img/slide1.jpg" alt="слайд 1">
-					<div class="imgText">Чому Вам вигідно створити у нас аккаунт?</div>
+					<div class="slider__imgText">Чому Вам вигідно створити у нас аккаунт?</div>
 				</div>
-				<div class="item">
+				<div class="slider__item">
 					<img src="img/slide2.jpg" alt="слайд 2">
-					<div class="imgText">У нас зареєструвались вже понад 8&nbsp;тисяч програмістів...</div>
+					<div class="slider__imgText">У нас зареєструвались вже понад 8&nbsp;тисяч програмістів...</div>
 				</div>
-				<div class="item">
+				<div class="slider__item">
 					<img src="img/slide3.jpg" alt="слайд 3">
-					<div class="imgText">...що володіють всіма популярними мовами програмування</div>
+					<div class="slider__imgText">...що володіють всіма популярними мовами програмування</div>
 				</div>
-				<div class="item">
+				<div class="slider__item">
 					<img src="img/slide4.jpg" alt="слайд 4">
-					<div class="imgText">Статистика GitHub</div>
+					<div class="slider__imgText">Статистика GitHub</div>
 				</div>
-				<div class="item">
+				<div class="slider__item">
 					<img src="img/slide5.jpg" alt="слайд 5">
-					<div class="imgText">Шукаєте роботу програмістом або маєте для них завдання? <span class="joinReg">Вперед!</span></div>
+					<div class="slider__imgText">Шукаєте роботу програмістом або маєте для них завдання? <span class="joinReg">Вперед!</span></div>
 				</div>
 				<div class="selector_list">
 					<label for="selector1"></label>
