@@ -14,9 +14,9 @@
 	<script type="text/template" data-name="DataProgrammer">
 		<!-- TEMPLATE для додавання полів блоку введення даних про нового програміста -->
 		<% arr.forEach(function(rec) { %>
-			<div>
+			<div class="data-programmer__content">
 				<label for="<%= rec.id %>"><%= rec.label %></label><br>
-				<input type="<%= rec.type %>" id="<%= rec.id %>"
+				<input class="data-programmer__field" type="<%= rec.type %>" id="<%= rec.id %>"
 				<% if (rec.placeholder) { %>
 					placeholder="<%= rec.placeholder %>"
 				<% } %>
@@ -35,12 +35,12 @@
 	<script type="text/template" data-name="DataSkill">
 		<!-- TEMPLATE для додавання полів блоку введення нової області знань -->
 		<% arr.forEach(function(rec) { %>
-			<div>
+			<div class="new-skill__content">
 				<label><%= rec.label %></label><br>
 				<% if (rec.label == "Виберіть розділ") { %>
-					<select class="skillGroups"></select>
+					<select id="skillGroups" class="new-skill__field"></select>
 				<% } else { %>
-					<input type="text" id="<%= rec.id %>" maxlength="16"
+					<input type="text" class="new-skill__field" id="<%= rec.id %>" maxlength="16"
 					pattern="<%= rec.pattern %>" required>
 				<% } %>
 				<i class="fa fa-check fa-fw" aria-hidden="true"></i>
@@ -58,12 +58,12 @@
 	<script type="text/template" data-name="Skills">
 		<!-- TEMPLATE для додавання полів блоку "Області знань" -->
 		<% arr.forEach(function(rec) { %>
-			<fieldset class="skill_group">
+			<fieldset class="skills__skills-group">
 				<legend><%= rec.legend %></legend>
 				<% rec.items.forEach(function(item) { %>
-					<div class="one_skill">
-						<label for="it_<%= item.name %>"><input type="checkbox" id="it_<%= item.name %>" class="it_type"><%= item.text %></label>
-						<input type="range" class="skill_range" id="it_<%= item.name %>_range">
+					<div class="skills__one-skill">
+						<label for="it_<%= item.name %>"><input type="checkbox" id="it_<%= item.name %>" class="skills__it-type"><%= item.text %></label>
+						<input type="range" class="skills__skill-range" id="it_<%= item.name %>_range">
 					</div>
 				<% }); %>
 			</fieldset>
@@ -137,8 +137,8 @@
 					<label><input type="radio" name="who" value="middle">менеджер</label>
 				</fieldset>
 				<div>
-					Введіть Ваш login:
-					<input type="text" class="modal-dialog__field" required>
+					Введіть Ваш email:
+					<input type="text" class="modal-dialog__field" pattern="[A-Za-z0-9_][A-Za-z0-9-_\.]+@[A-Za-z0-9-]+\.[A-Za-z]{2,4}" required>
 				</div>
 				<div>
 					Введіть Ваш пароль:
@@ -205,33 +205,6 @@
 				</div>
 			</section>
 		</article><!--end startPage-->
-		<article id="newProgrammer">
-			<header>
-				<h2>Внесення даних про нового програміста</h2>
-				<h3>Вкажіть свої особисті дані</h3>
-			</header>
-			<section class="dataProgrammer"></section>
-		</article><!--end newProgrammer-->
-		<article id="newSkill">
-			<header>
-				<h2>Внесення даних про нову область знань</h2>
-			</header>
-			<section class="newSkill"></section>
-		</article><!--end newSkill-->
-		<article id="skills">
-			<header>
-				<h3></h3>
-			</header>			
-			<section class="skills"></section>
-			<div>
-				<input type="button" class="button" id="button_save" value="Зберегти">
-				<input type="button" class="button" id="button_del" value="Видалити">
-				<input type="reset" class="button" id="button_cancel" value="Відмінити">
-				<a href="#searchResult">
-					<input type="button" class="button" id="button_search" value="Шукати">
-				</a>
-			</div>
-		</article><!--end skills-->
 		<article id="searchResult">
 			<h3>Список програмістів, рівень знань яких відповідає критеріям пошуку</h3>
 			<table id="selected" class="selected">
@@ -241,6 +214,31 @@
 				</thead>
 			</table>
 		</article><!--end searchResult-->
+		<article id="newProgrammer">
+			<header>
+				<h2>Внесення даних про нового програміста</h2>
+				<h3>Вкажіть свої особисті дані</h3>
+			</header>
+			<section class="data-programmer"></section>
+		</article><!--end newProgrammer-->
+		<article id="newSkill">
+			<header>
+				<h2>Внесення даних про нову область знань</h2>
+			</header>
+			<section class="new-skill"></section>
+		</article><!--end newSkill-->
+		<article id="skills">
+			<header>
+				<h3></h3>
+			</header>			
+			<section class="skills"></section>
+			<div class="buttons-block">
+				<input type="button" class="button" id="button_save" value="Зберегти">
+				<input type="button" class="button" id="button_del" value="Видалити">
+				<input type="reset" class="button" id="button_cancel" value="Відмінити">
+				<input type="button" class="button" id="button_search" value="Шукати">
+			</div>
+		</article><!--end skills-->
 		<article id="aboutThis" class="aboutThis">
 			<h2>Технічне завдання на тему "Система учёта знаний"</h2>
 			<h4>Пользователи («программисты») указывают и оценивают свои знания в различных (сгруппированных) областях.</h4>
@@ -374,11 +372,11 @@
 				{id: "progEmail", label: "E-mail", type: "email", placeholder: "Ваш e-mail",
 					pattern: "[A-Za-z0-9_][A-Za-z0-9-_\\.]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,4}"},
 				{id: "progExperience", label: "Досвід роботи (років)", type: "number", min: "0"}];
-		document.getElementsByClassName('dataProgrammer')[0].innerHTML = window.Templates.DataProgrammer(arr);
+		document.getElementsByClassName('data-programmer')[0].innerHTML = window.Templates.DataProgrammer(arr);
 		arr = [{label: "Виберіть розділ"}, {id: "knowledgeName", label: "Вкажіть назву нової області знань",
 					pattern: "[A-Za-zА-ЯЁІЇа-яёії0-9-\\.\\s]+"},
 				{id: "knowledgeID", label: "Вкажіть ідентифікатор (латиницею)", pattern: "[A-Za-z0-9-]+"}];
-		document.getElementsByClassName('newSkill')[0].innerHTML = window.Templates.DataSkill(arr);
+		document.getElementsByClassName('new-skill')[0].innerHTML = window.Templates.DataSkill(arr);
 		arr = [{legend: "Мови програмування", items: [{name: "C", text: "C"}, {name: "CPlus", text: "C++"},
 				{name: "CSh", text: "C#"}, {name: "ES6", text: "ECMAScript 6"}, {name: "JS", text: "JavaScript"},
 				{name: "Java", text: "Java"}, {name: "Python", text: "Python"}, {name: "Ruby", text: "Ruby"},
@@ -406,7 +404,7 @@
 				{name: "Firebug", text: "Firebug"}, {name: "Photoshop", text: "Photoshop"},
 				{name: "Illustrator", text: "Illustrator"}
 				]}];
-			document.getElementsByClassName('skillGroups')[0].innerHTML = window.Templates.SkillGroups(arr);
+			document.getElementById('skillGroups').innerHTML = window.Templates.SkillGroups(arr);
 			document.getElementsByClassName('skills')[0].innerHTML = window.Templates.Skills(arr);
 	</script>
 </body>

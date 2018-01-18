@@ -260,7 +260,7 @@ nav > div:first-of-type {
 	bottom: 0;
 	left: 0;
 	background: rgba(0, 0, 0, 0.7);
-	z-index: 9;
+	z-index: 19;
 	display: none;
 }
 
@@ -331,7 +331,7 @@ nav > div:first-of-type {
 	color: #fff;
 	text-decoration: none;
 	cursor: pointer;
-	z-index: 10;
+	z-index: 20;
 }
 @media (min-width: 768px) and (max-width: 991px) {
 	.modal-dialog__content { margin: 150px auto; }
@@ -410,7 +410,7 @@ nav > div:first-of-type {
 
 .slider img {
 	width: 100%;
-	box-shadow: 0 0 30px rgba(0,0,0,0.7);
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
 }
 
 .slider .slider__imgText {
@@ -530,35 +530,33 @@ nav > div:first-of-type {
 /* END слайдер */
 
 /* блоки "Програмісти" і "Області знань" */
-.dataProgrammer,
+.data-programmer,
 .skills,
-.newSkill {
+.new-skill {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 }
-.dataProgrammer input,
-.newSkill input,
-.newSkill select {
+.data-programmer__field,
+.new-skill__field {
 	height: 28px;
 	font-size: 16px;
 }
-.dataProgrammer div,
-.newSkill div {padding: 0 15px 15px;}
+.data-programmer__content,
+.new-skill__content {padding: 0 15px 15px;}
 
-.dataProgrammer div:nth-child(odd) input { width: 200px; }
-.dataProgrammer div:nth-child(even) input { width: 170px; }
+.data-programmer__content:nth-child(odd) .data-programmer__field { width: 200px; }
+.data-programmer__content:nth-child(even) .data-programmer__field { width: 170px; }
 
-.dataProgrammer i,
-.newSkill i { color: rgb(255, 0, 0); }
+.data-programmer .fa,
+.new-skill .fa { color: rgb(255, 0, 0); }
 
-.dataProgrammer input:valid ~ i,
-.newSkill select:valid ~ i,
-.newSkill input:valid ~ i { color: rgb(0, 255, 127); }
+.data-programmer__field:valid ~ .fa,
+.new-skill__field:valid ~ .fa { color: rgb(0, 255, 127); }
 
-.dataProgrammer input:focus,
-.newSkill input:focus,
-.newSkill select:focus {
+.modal-dialog__field:focus,
+.data-programmer__field:focus,
+.new-skill__field:focus {
 	outline: none;
 	box-shadow: 0 0 8px rgba(0,0,0,0.7);
 	-webkit-transition: box-shadow ease-out 0.4s;
@@ -566,27 +564,18 @@ nav > div:first-of-type {
 	-o-transition: box-shadow ease-out 0.4s;
 	transition: box-shadow ease-out 0.4s;
 }
-.newSkill input,
-.newSkill select {
-	width: 280px;
-}
+.new-skill__field { width: 280px; }
 
-.skills ~ div {
-	text-align: center;
-}
+.buttons-block {	text-align: center; }
 
-.skill_group {
-	/*width: 250px;*/
-}
-
-.one_skill {
+.skills__one-skill {
 	width: 250px;
 	display: flex;
 	justify-content: space-between;
 }
-.one_skill input {	height: 14px; }
-.one_skill label {	width: 170px; }
-.skill_range { width: 80px; }
+.skills__one-skill label {	width: 170px; }
+.skills__one-skill input {	height: 14px; }
+.skills__skill-range { width: 80px; }
 
 .button {
 	margin: 15px;
