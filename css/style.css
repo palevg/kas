@@ -193,6 +193,10 @@ nav > div:first-of-type {
 		width: 150px;
 		top: 37px;
 	}
+	.user-block ul {
+		top: 37px;
+		left: 590px;
+	}
 	.menu li { font-size: 14px; }
 	.menu ul li { font-size: 12px; }
 	.menu li span{ padding: 8px; }
