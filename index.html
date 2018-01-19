@@ -86,11 +86,11 @@
 	</script>
 </head>
 <body>
-	<header class="mainHeader">
-		<span id="touch-menu" class="mobile-menu"><i class="fa fa-bars fa-fw" aria-hidden="true"></i>Меню</span>
+	<header class="main-header">
+		<span id="touch-menu" class="main-header__mobile-menu"><i class="fa fa-bars fa-fw" aria-hidden="true"></i>Меню</span>
 		<nav>
 			<div>
-				<ul class="menu">
+				<ul class="main-header__menu">
 					<li id="mi-main"><span><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Головна</span></li>
 					<li>
 						<span><i class="fa fa-tasks fa-fw" aria-hidden="true"></i>&nbsp;Програмісти</span>
@@ -115,17 +115,17 @@
 					</li>
 				</ul>
 			</div>
-			<div class="user-block">
-				Привіт,&nbsp;<span>Гість</span>! &nbsp;<i class="fa fa-user-circle-o fa-fw fa-2x" aria-hidden="true"></i>
-				<ul>
-					<li id="mi-signIn"><span><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>&nbsp;Вхід</span></li>
-					<li id="mi-registration"><span><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;Реєстрація</span></li>
-					<li id="mi-userInfo"><span><i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>&nbsp;Кабінет</span></li>
-					<li id="mi-signOut"><span><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>&nbsp;Вихід</span></li>
-				</ul>
-			</div>
 		</nav>
-	</header><!--end mainHeader-->
+		<div class="main-header__user-menu">
+			Привіт,&nbsp;<span>Гість</span>! &nbsp;<i class="fa fa-user-circle-o fa-fw fa-2x" aria-hidden="true"></i>
+			<ul>
+				<li id="mi-signIn"><span><i class="fa fa-sign-in fa-fw" aria-hidden="true"></i>&nbsp;Вхід</span></li>
+				<li id="mi-registration"><span><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>&nbsp;Реєстрація</span></li>
+				<li id="mi-userInfo"><span><i class="fa fa-address-card-o fa-fw" aria-hidden="true"></i>&nbsp;Кабінет</span></li>
+				<li id="mi-signOut"><span><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>&nbsp;Вихід</span></li>
+			</ul>
+		</div>
+	</header><!-- end main-header -->
 
 	<!-- модальні вікна -->
 	<div id="modalBlocks">
@@ -133,8 +133,8 @@
 			<div class="modal-dialog__content user-width">
 				<fieldset class="modal-dialog__fieldset">
 					<legend>Ви є...</legend>
-					<label><input type="radio" name="who" value="low" checked>програміст</label><br>
-					<label><input type="radio" name="who" value="middle">менеджер</label>
+					<label><input type="radio" name="who" value="1" checked>програміст</label><br>
+					<label><input type="radio" name="who" value="5">менеджер</label>
 				</fieldset>
 				<div>
 					Введіть Ваш email:

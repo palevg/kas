@@ -177,7 +177,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 $(document).ready(function() {
 	// головне меню
-	var menu = $('.menu');
+	var menu = $('.main-header__menu');
 
 	menu.on('click', function() {
 		if ($(window).width() <= 760 && !menu.is(':hidden')) {
@@ -263,6 +263,7 @@ $(document).ready(function() {
 				// завдання "додавання нового програміста"
 				if (accessToWork(9)) {
 					if (confirmCancel("#newProgrammer")) {
+						editUser = false;
 						$("#newProgrammer h2")[0].innerText = "Внесення даних про нового програміста";
 						// обнуляємо поля після попереднього вводу
 						$("#progName").val('');
@@ -346,6 +347,20 @@ $(document).ready(function() {
 					google.maps.event.trigger(map, 'resize');
 				}
 			}
+		}, false);
+	}
+
+	// EventListener натискання пунктів меню користувача
+	var userMenu = document.getElementsByClassName('main-header__user-menu');
+	if (userMenu[0].addEventListener) {
+		userMenu[0].addEventListener("click", function(e) {
+			var place;
+			if (e.target.tagName == 'SPAN') {
+				place = e.target.parentNode.getAttribute('id');
+			}
+			if (e.target.tagName == 'I') {
+				place = e.target.parentNode.parentNode.getAttribute('id');
+			}
 			if (place == 'mi-signIn') {
 				$('#userSignin .modal-dialog__changeSignin')[0].innerText = "Увійти з паролем";
 				typeModalWindow();
@@ -397,7 +412,7 @@ $(document).ready(function() {
 				if (confirm('Ви дійсно бажаєте вийти із системи?')) {
 					currentUser = "";
 					userLevel = 0;
-					$(".user-block span")[0].innerText = "Гість";
+					$(".main-header__user-menu span")[0].innerText = "Гість";
 					$(joinReg[0]).show();
 					loginStatus(false);
 					displayBlocks("#startPage");
@@ -460,6 +475,15 @@ $(document).ready(function() {
 		$('#selected').append("</tbody>");
 	}
 
+	// вставка імені користувача в заголовок меню користувача
+	function insertUserName(pos) {
+		var isSpace = users[pos].name.indexOf(' ');
+		isSpace == -1 ? currentUser = users[pos].name : currentUser = users[pos].name.slice(0, isSpace);
+		userPos = pos;
+		userLevel = users[pos].level;
+		$(".main-header__user-menu span")[0].innerText = currentUser;
+	}
+
 	// EventListener модального вікна
 	var modalBlocks = document.getElementById('modalBlocks');
 	if (modalBlocks.addEventListener) {
@@ -482,11 +506,12 @@ $(document).ready(function() {
 							match = true;
 							tempVar = $("#userSignin .modal-dialog__field")[1].value;
 							if (users[i].password == tempVar) {
-								userPos = users[i].name.indexOf(' ');
+								insertUserName(i);
+								/*userPos = users[i].name.indexOf(' ');
 								userPos == -1 ? currentUser = users[i].name : currentUser = users[i].name.slice(0, userPos);
 								userPos = i;
 								userLevel = users[i].level;
-								$(".user-block span")[0].innerText = currentUser;
+								$(".main-header__user-menu span")[0].innerText = currentUser;*/
 								loginStatus(true);
 								$(e.target.parentNode.parentNode).css('display', 'none');
 								$(joinReg[0]).hide();
@@ -596,17 +621,22 @@ $(document).ready(function() {
 								var nameId = $(element).attr('id');
 								tempSkill[$('label[for="' + nameId + '"]').text()] = $("#" + nameId + "_range").val();
 							});
-							var newRecord = {};
-							newRecord.name = $("#progName").val();
-							newRecord.birth = $("#progBirth").val();
-							newRecord.email = $("#progEmail").val();
-							newRecord.experience = $("#progExperience").val();
-							newRecord.skill = tempSkill;
 							if (editUser) {
-								users[userPos] = newRecord;
+								users[userPos].name = $("#progName").val();
+								users[userPos].birth = $("#progBirth").val();
+								users[userPos].email = $("#progEmail").val();
+								users[userPos].experience = $("#progExperience").val();
+								users[userPos].skill = tempSkill;
 								editUser = false;
+								insertUserName(userPos);
 								alert('Ваші дані успішно змінено!');
 							} else {
+								var newRecord = {};
+								newRecord.name = $("#progName").val();
+								newRecord.birth = $("#progBirth").val();
+								newRecord.email = $("#progEmail").val();
+								newRecord.experience = $("#progExperience").val();
+								newRecord.skill = tempSkill;
 								users.push(newRecord);
 								alert('Дані про нового програміста успішно внесено до системи!\nНа даний час у базі даних є інформація щодо ' + users.length + ' програмістів.');
 							}
