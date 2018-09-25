@@ -1,0 +1,172 @@
+/* ----- основний блок ----- */
+.mainWrap {
+	width: 100%;
+	padding: 0 20px;
+	margin: 0 auto;
+}
+
+/* блоки "Програмісти" і "Області знань" */
+.data-programmer,
+.skills,
+.new-skill {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.data-programmer__field,
+.new-skill__field {
+	height: 28px;
+	font-size: 16px;
+}
+
+.data-programmer__content,
+.new-skill__content {padding: 0 15px 15px;}
+
+.data-programmer__content:nth-child(odd) .data-programmer__field { width: 200px; }
+
+.data-programmer__content:nth-child(even) .data-programmer__field { width: 170px; }
+
+.data-programmer .fa,
+.new-skill .fa { color: rgb(255, 0, 0); }
+
+.data-programmer__field:valid ~ .fa,
+.new-skill__field:valid ~ .fa { color: rgb(0, 255, 127); }
+
+.modal-dialog__field:focus,
+.data-programmer__field:focus,
+.new-skill__field:focus {
+	outline: none;
+	box-shadow: 0 0 8px rgba(0,0,0,0.7);
+	-webkit-transition: box-shadow ease-out 0.4s;
+	-moz-transition: box-shadow ease-out 0.4s;
+	-o-transition: box-shadow ease-out 0.4s;
+	transition: box-shadow ease-out 0.4s;
+}
+
+.new-skill__field { width: 280px; }
+
+.buttons-block {	text-align: center; }
+
+.skills__one-skill {
+	width: 250px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.skills__one-skill label { width: 170px; }
+
+.skills__one-skill input { height: 14px; }
+
+.skills__skill-range { width: 80px; }
+
+.button {
+	margin: 15px;
+	font-size: 16px;
+	width: 120px;
+	height: 30px;
+}
+
+.selected {
+	margin: auto;
+	cursor: pointer;
+}
+
+.selected thead {
+	background: #808080;
+	color: #fff;
+}
+
+.selected,
+.selected thead { border: 2px solid #000; }
+
+.selected th,
+.selected td {
+	border: 1px solid #000;
+	padding: 10px;
+}
+
+.selected tbody tr:nth-child(2n) { background: #FDF5E6; }
+
+.selected tbody tr:nth-child(2n+1) { background: #FFFAFA; }
+
+.selected tbody tr:hover {
+	background: #9CA3DA;
+	color: #fff;
+	-webkit-transition: all 0.2s ease-in-out 0s;
+	-moz-transition: all 0.2s ease-in-out 0s;
+	-o-transition: all 0.2s ease-in-out 0s;
+	transition: all 0.2s ease-in-out 0s;
+}
+
+.selected tbody td:nth-child(1) { display: none; }
+
+.selected td:last-child { max-width: 1000px; }
+/* END блоки "Програмісти" і "Області знань" */
+
+/* блоки "Про нас" і "Контакти" */
+.aboutThis { background: rgba(255, 250, 250, 0.3); }
+
+.aboutThis li { padding-bottom: 8px; }
+
+.map_canvas {
+	width: 1160px;
+	height: 550px;
+	margin: auto;
+	z-index: 0;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+	.slider {	width: 951px;	}
+
+	.map_canvas { width: 951px;	}
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+	.slider { width: 727px;	}
+
+	.map_canvas { width: 727px;	}
+}
+
+@media (max-width: 767px) {
+	.slider { width: 440px;	}
+
+	.map_canvas {
+		width: 440px;
+		height: 450px;
+	}
+}
+@media (max-width: 480px) {
+	.slider { width: 320px;	}
+
+	.map_canvas {
+		width: 320px;
+		height: 450px;
+	}
+}
+
+.contacts {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 40px;
+}
+
+.contact_block {
+	width: 300px;
+	height: 50px;
+	display: flex;
+	margin: 0 20px 40px 15px;
+}
+
+.contact_block i {
+	color: #797979;
+	border: 2px solid #797979;
+	border-radius: 40px;
+	padding: 13px 44px 45px 17px;
+}
+
+.contact_text { margin-left: 10px; }
+
+.contact_text > div:first-child { font-weight: bold; }
+/* END блоки "Про нас" і "Контакти" */

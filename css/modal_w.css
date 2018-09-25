@@ -1,0 +1,111 @@
+.modal-dialog {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 19;
+	display: none;
+}
+
+.modal-dialog__content {
+	position: relative;
+	background: #fff url("../img/grey.png") repeat;
+	margin: 200px auto;
+	padding: 30px 10px 15px;
+	font-size: 18px;
+	border: 3px solid #9CA3DA;
+	border-radius: 7px;
+	-webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+	-o-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 15px 20px rgba(0, 0, 0, 0.22), 0 19px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-dialog__field {
+	margin-bottom: 15px;
+	font-size: 18px;
+	width: 200px;
+}
+
+.progr-width { width: 800px; }
+
+.user-width {
+	width: 280px;
+	text-align: center;
+}
+
+.modal-dialog__fieldset {
+	text-align: left;
+	width: 200px;
+	margin: 0 auto 15px;
+}
+
+.modal-dialog__changeSignin {
+	position: absolute;
+	left: 10px;
+	top: 5px;
+	font-size: 14px;
+	color: #0000FF;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.modal-dialog__img {
+	height: 170px;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+.modal-dialog__table td {padding: 7px;}
+
+.modal-dialog__table td:first-child {
+	text-align: right;
+	min-width: 220px;
+}
+
+.modal-dialog__table td:last-child {
+	text-align: left;
+	font-weight: bold;
+}
+
+.modal-dialog__close {
+	position: absolute;
+	right: 8px;
+	top: 2px;
+	width: 20px;
+	font-size: 20px;
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
+	z-index: 20;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+	.modal-dialog__content { margin: 150px auto; }
+
+	.progr-width { width: 700px; }
+}
+
+@media (max-width: 767px) {
+	.modal-dialog__content {
+		text-align: center;
+		margin: 100px auto;
+	}
+
+	.progr-width { width: 400px; }
+
+	.modal-dialog__content img { position: static; }
+
+	.modal-dialog__content table td:first-child {	min-width: 170px; }
+}
+
+@media (max-width: 480px) {
+	.modal-dialog__content { margin: 80px auto; }
+
+	.progr-width { width: 320px; }
+
+	.modal-dialog__content table td:first-child {	min-width: 140px; }
+}

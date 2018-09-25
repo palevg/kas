@@ -1,0 +1,56 @@
+@font-face {
+	font-family: OpenSans;
+	src: url(../fonts/opensans.woff);
+}
+
+/* RESET STYLES */
+body, div, dl, dt, dd, pre, form, label, p, blockquote, th, td { margin: 0; padding: 0; }
+table { border-collapse: collapse; border-spacing: 0; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; }
+a { text-decoration: none; }
+a:active, a:focus { outline: none; }
+article, aside, figure, footer, header, hgroup, nav, section { display: block; }
+* {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+body {
+	background: #fff url("../img/grey.png") repeat;
+	font: 16px "OpenSans", Helvetica, Arial, sans-serif;
+	color: #3E4156;
+}
+
+h1 {
+	padding: 0 10px;
+	text-align: center;
+	text-shadow: 1px 1px #fff;
+	font-weight: 400;
+	font-size: 2.4em;
+	line-height: 1.3em;
+}
+h2 {
+	text-align: center;
+	font-size: 32px;
+	line-height: 1.3em;
+	font-weight: bold;
+	text-shadow: 1px 1px #fff;
+}
+h3 { font-size: 24px; line-height: 1.3em; text-align: center; }
+h4 { font-size: 18px; line-height: 1.3em; text-align: center; }
+h5 { font-size: 16px; }
+h6 { font-size: 14px; }
+
+p { padding-bottom: 11px; }
+p, div, span { line-height: 1.5em; }
+
+hr {
+	margin: 15px auto;
+	height: 2px;
+	border: 0;
+	background: -webkit-linear-gradient(left, rgba(198, 0, 3, 0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198, 0, 3, 0) 100%);
+	background: -moz-linear-gradient(left, rgba(198, 0, 3, 0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198, 0, 3, 0) 100%);
+	background: -o-linear-gradient(left, rgba(198, 0, 3, 0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198, 0, 3, 0) 100%);
+	background: linear-gradient(to right, rgba(198, 0, 3, 0) 0%, rgba(128, 128, 128, 0.7) 50%, rgba(198, 0, 3, 0) 100%);
+}
